@@ -15,7 +15,8 @@ const Places = ({ mapRef }: PlacesProps) => {
 
 	const handleCopyLinkClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
-		const url = window.location.origin;
+		let url = window.location.origin;
+		if (url.includes('github')) url += '/share-location';
 		const target = e.target as HTMLElement;
 		const coords = target.closest('li')?.dataset.coords;
 
