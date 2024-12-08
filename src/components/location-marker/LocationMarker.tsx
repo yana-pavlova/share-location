@@ -9,9 +9,6 @@ const LocationMarker = () => {
 			map.locate();
 			setPosition(e.latlng);
 		},
-		locationfound(e) {
-			console.log(e);
-		},
 	});
 
 	return position === null ? null : (

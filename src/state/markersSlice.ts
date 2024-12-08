@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TMarker } from '../types';
 
 interface TMarkersState {
@@ -15,7 +15,7 @@ const markerSlice = createSlice({
 	reducers: {
 		// добавляем маркер, если маркера с такой же позицией нет в сторе
 		// в противном случае возвращаем предыдущее состояние
-		addMarker: (state, action) => {
+		addMarker: (state, action: PayloadAction<TMarker>) => {
 			const markerExists = state.markers.some((m) => {
 				return (
 					m.position[0] === action.payload.position[0] &&
@@ -25,6 +25,29 @@ const markerSlice = createSlice({
 
 			if (!markerExists) {
 				state.markers.push(action.payload);
+			}
+		},
+		addCurrentLocation: (state, action: PayloadAction<TMarker>) => {
+			// iterate through markers
+			const markerIndex = state.markers.findIndex(
+				// looking for marker with currentLocation === true
+				(m) => m.currentLocation
+			);
+
+			// if marker is found
+			if (markerIndex !== -1) {
+				// replace position
+				state.markers[markerIndex] = {
+					...state.markers[markerIndex],
+					position: action.payload.position,
+				};
+			} else {
+				// if marker is not found
+				// add marker with currentLocation === true
+				state.markers.push({
+					...action.payload,
+					currentLocation: true,
+				});
 			}
 		},
 		// TODO: типизировать payload
@@ -45,7 +68,8 @@ const markerSlice = createSlice({
 });
 
 export default markerSlice.reducer;
-export const { addMarker, updateAddress } = markerSlice.actions;
+export const { addMarker, addCurrentLocation, updateAddress } =
+	markerSlice.actions;
 
 export const selectMarkers = (state: { markers: TMarkersState }) =>
 	state.markers.markers;

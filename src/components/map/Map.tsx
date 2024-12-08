@@ -19,8 +19,10 @@ type MapProps = {
 		latitude: number;
 		longitude: number;
 	};
-	// markers: TMarker[] | [];
-	// setMarkers: React.Dispatch<React.SetStateAction<TMarker[]>>;
+	currentLocation: {
+		latitude: number;
+		longitude: number;
+	} | null;
 	setCurrentLocation: React.Dispatch<
 		React.SetStateAction<{
 			latitude: number;
@@ -31,9 +33,8 @@ type MapProps = {
 
 const MyMap = ({
 	mapRef,
-	// markers,
-	// setMarkers,
 	location,
+	currentLocation,
 	setCurrentLocation,
 }: MapProps) => {
 	const [popupPosition, setPopupPosition] = useState<null | LatLng>(null);
@@ -84,15 +85,6 @@ const MyMap = ({
 					highlighted: false,
 				})
 			);
-			// setMarkers((prevMarkers) => [
-			// 	...prevMarkers,
-			// 	{
-			// 		id: uuidv4(),
-			// 		text: address || '',
-			// 		position: [popupPosition!.lat, popupPosition!.lng],
-			// 		highlighted: false,
-			// 	},
-			// ]);
 		});
 
 		setPopupPosition(null);
@@ -122,12 +114,6 @@ const MyMap = ({
 				{popupPosition && (
 					<Popup position={popupPosition}>
 						<form action="submit">
-							{/* <input
-								type="text"
-								placeholder="Enter a note"
-								value={inputValue}
-								onChange={(e) => setInputValue(e.target.value)}
-							/> */}
 							<button type="submit" onClick={handleSubmitButton}>
 								Создать точку
 							</button>
@@ -140,12 +126,13 @@ const MyMap = ({
 							{...(marker.currentLocation ? { icon: customIcon } : {})}
 							id={marker.id}
 							key={marker.id}
-							// setMarkers={setMarkers}
-							// markers={markers}
 							marker={marker}
 						/>
 					))}
-				<FindMe setCurrentLocation={setCurrentLocation} />
+				<FindMe
+					currentLocation={currentLocation}
+					setCurrentLocation={setCurrentLocation}
+				/>
 			</MapContainer>
 		</>
 	);

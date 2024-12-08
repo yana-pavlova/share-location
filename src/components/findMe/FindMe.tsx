@@ -6,6 +6,10 @@ import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 
 type TFindMeProps = {
+	currentLocation: {
+		latitude: number;
+		longitude: number;
+	} | null;
 	setCurrentLocation: React.Dispatch<
 		React.SetStateAction<{
 			latitude: number;
@@ -14,30 +18,23 @@ type TFindMeProps = {
 	>;
 };
 
-const FindMe = ({ setCurrentLocation }: TFindMeProps) => {
-	const [myLocationIsFound, setmyLocationIsFound] = useState(false);
-	const [myCoords, setMyCoords] = useState<{
-		latitude: number;
-		longitude: number;
-	} | null>(null);
+const FindMe = ({ currentLocation, setCurrentLocation }: TFindMeProps) => {
 	const map = useMap();
 
 	const getLocation = async () => {
-		if (!myLocationIsFound) {
+		if (!currentLocation) {
 			const coords = await fetchLocation();
 			if (coords) {
-				setMyCoords(coords);
 				setCurrentLocation({
 					latitude: coords.latitude,
 					longitude: coords.longitude,
 				});
-				setmyLocationIsFound(true);
 				map.setView(L.latLng(coords.latitude, coords.longitude), map.getZoom());
 			}
 		}
-		if (myCoords)
+		if (currentLocation)
 			map.setView(
-				L.latLng(myCoords.latitude, myCoords.longitude),
+				L.latLng(currentLocation.latitude, currentLocation.longitude),
 				map.getZoom()
 			);
 	};

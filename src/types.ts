@@ -3,6 +3,7 @@ export type TMarker = {
 	position: [number, number];
 	text: string;
 	currentLocation?: boolean;
+	highlighted?: boolean;
 };
 
 export type TAddress = {

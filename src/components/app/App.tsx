@@ -6,7 +6,7 @@ import Places from '../places/Places';
 import L from 'leaflet';
 import { fetchLocation, fetchAddress } from '../../utils/api';
 import { useDispatch } from 'react-redux';
-import { addMarker } from '../../state/markersSlice';
+import { addCurrentLocation, addMarker } from '../../state/markersSlice';
 import styles from './app.module.scss';
 import Footer from '../footer/Footer';
 
@@ -93,7 +93,8 @@ const App = () => {
 				],
 				currentLocation: true,
 			};
-			dispatch(addMarker(newMarker));
+			// dispatch(addMarker(newMarker));
+			dispatch(addCurrentLocation(newMarker));
 			return;
 		}
 	}, [currentLocation]);
@@ -109,6 +110,8 @@ const App = () => {
 					<MyMap
 						mapRef={mapRef}
 						location={location}
+						//? put currentLocation into contextProvider
+						currentLocation={currentLocation}
 						setCurrentLocation={setCurrentLocation}
 					/>
 					<div className={styles.info}>
