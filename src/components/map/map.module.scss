@@ -1,0 +1,12 @@
+.map {
+	position: relative;
+	inline-size: 100%;
+	block-size: 100%;
+	min-block-size: 200px;
+	flex-grow: 1;
+	background-color: antiquewhite;
+}
+
+.map img {
+	transition: opacity 0.3s ease;
+}

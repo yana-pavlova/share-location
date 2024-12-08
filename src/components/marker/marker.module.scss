@@ -1,0 +1,9 @@
+.marker {
+	opacity: 0.5;
+	transition: opacity 0.3s ease;
+}
+
+.marker-highlighted {
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}

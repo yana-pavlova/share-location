@@ -1,0 +1,22 @@
+.image {
+	position: absolute;
+	bottom: 30px;
+	right: 20px;
+	z-index: 1000;
+	inline-size: 50px;
+	opacity: 0.5;
+	cursor: pointer;
+	filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+.image:active {
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}
+
+@media (hover: hover) {
+	.image:hover {
+		opacity: 1;
+		transition: opacity 0.3s ease;
+	}
+}

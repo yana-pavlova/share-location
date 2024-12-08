@@ -1,0 +1,29 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: inherit;
+}
+
+#root {
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
+}
+
+.marker-highlighted {
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}
+
+.li-normal {
+	background-color: transparent;
+	transition: background-color 0.3s ease;
+}
+
+.li-highlighted {
+	background-color: aquamarine;
+}
