@@ -18,7 +18,9 @@ export const fetchLocation = async (): Promise<
 		return { latitude, longitude };
 	} catch (err: any) {
 		if (err.code === 1) {
-			toast.error('Please, enable geolocation on your device. Then try again');
+			toast.error(
+				'Please, enable geolocation on your device or browser. Then try again'
+			);
 		} else if (err.code === 2) {
 			toast.error(
 				'Unfortunately, we could not get your location. Please, try again'
