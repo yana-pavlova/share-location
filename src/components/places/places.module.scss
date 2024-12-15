@@ -1,3 +1,23 @@
 .marker {
+	inline-size: 100%;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
 	transition: font-weight 0.3s ease;
+}
+
+.copy-link-button {
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	border-radius: 10px;
+	opacity: 0.4;
+	transition: opacity 0.3s ease;
+}
+
+@media (hover: hover) {
+	.copy-link-button:hover {
+		opacity: 1;
+	}
 }

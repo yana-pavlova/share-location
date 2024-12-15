@@ -80,9 +80,10 @@ const Places = ({ mapRef }: PlacesProps) => {
 
 	const handleLiCLick = (e: React.MouseEvent<HTMLLIElement>) => {
 		const target = e.target as HTMLElement;
+		const liElement = target.closest('li');
 
 		const marker = markers.find((marker) => {
-			return marker.id === target.id;
+			return marker.id === liElement?.id;
 		});
 
 		if (marker) {
@@ -119,12 +120,22 @@ const Places = ({ mapRef }: PlacesProps) => {
 						data-coords={marker.position.toString()}
 						className={clsx(styles.marker, 'li-normal')}
 						key={marker.id}
-						onMouseEnter={handleMouseEnter}
-						onMouseLeave={handleMouseLeave}
+						// onMouseEnter={handleMouseEnter}
+						// onMouseLeave={handleMouseLeave}
 						onClick={handleLiCLick}
 					>
-						📍{marker.text}
-						<button onClick={handleCopyLinkClick}>🔗</button>
+						<button
+							className={styles.copyLinkButton}
+							onClick={handleCopyLinkClick}
+						>
+							🔗
+						</button>
+						<span
+							onMouseEnter={handleMouseEnter}
+							onMouseLeave={handleMouseLeave}
+						>
+							{marker.text}
+						</span>
 					</li>
 				);
 			})}
