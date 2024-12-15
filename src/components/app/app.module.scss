@@ -7,21 +7,22 @@
 	inline-size: 100%;
 }
 
-.info-title {
-	text-transform: uppercase;
-	font-size: 1.3em;
-}
+.showMeModal {
+	align-self: flex-end;
+	color: #2880ca;
+	font-weight: 400;
+	font-size: 0.8rem;
+	border-bottom: 1px solid transparent;
+	transition: border-bottom 0.2s ease;
 
-.info-items {
-	margin-block-start: 5px;
-}
+	&:active {
+		border-bottom: 1px solid #2880ca;
+	}
 
-.info-items li::before {
-	content: '';
-	display: inline-block;
-	width: 10px;
-	height: 10px;
-	background-color: #2880ca;
-	border-radius: 50%;
-	margin-inline-end: 5px;
+	@media (hover: hover) {
+		&:hover {
+			cursor: pointer;
+			border-bottom: 1px solid #2880ca;
+		}
+	}
 }

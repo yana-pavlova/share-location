@@ -12,6 +12,7 @@ import {
 	updateCurrentLocation,
 } from '../../state/markersSlice';
 import styles from './app.module.scss';
+import Modal from '../modal/Modal';
 import Footer from '../footer/Footer';
 import Header from '../header/Header';
 import i18next from 'i18next';
@@ -32,9 +33,10 @@ const App = () => {
 	}>({ latitude: 51.505, longitude: -0.09 });
 	const [curLocationIsloading, setCurLocationIsloading] =
 		useState<boolean>(false);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
 	const mapRef = useRef<L.Map | null>(null);
 	const { t } = useTranslation();
-	const rules = t('rules', { returnObjects: true }) as string[];
 	const initialPointText = t('initialPoint');
 
 	useEffect(() => {
@@ -120,6 +122,12 @@ const App = () => {
 			) : (
 				<main className={styles.container}>
 					<ToastContainer />
+					<p
+						className={styles.showMeModal}
+						onClick={() => setIsModalOpen(true)}
+					>
+						{t('title')}
+					</p>
 					<Places mapRef={mapRef} />
 					<MyMap
 						mapRef={mapRef}
@@ -128,14 +136,7 @@ const App = () => {
 						currentLocation={currentLocation}
 						setCurrentLocation={setCurrentLocation}
 					/>
-					<div className={styles.info}>
-						<h2 className={styles.infoTitle}>{t('title')}</h2>
-						<ul className={styles.infoItems}>
-							{rules.map((rule, index) => (
-								<li key={index}>{rule}</li>
-							))}
-						</ul>
-					</div>
+					{isModalOpen && <Modal closeModal={() => setIsModalOpen(false)} />}
 				</main>
 			)}
 			<Footer />

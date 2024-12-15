@@ -1,0 +1,93 @@
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	block-size: 100%;
+	inline-size: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	inline-size: 90%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+	background-color: #fff;
+	z-index: 1001;
+	padding: 1rem;
+	border-radius: 10px;
+}
+
+.info-title {
+	text-transform: uppercase;
+	font-size: 1.3em;
+}
+
+.info-items {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	line-height: 1.5;
+}
+
+.info-items li::before {
+	content: '';
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background-color: #2880ca;
+	border-radius: 50%;
+	margin-inline-end: 5px;
+}
+
+.close-button {
+	inline-size: 22px;
+	block-size: 22px;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	border: none;
+	background-color: transparent;
+	opacity: 0.4;
+	transition: opacity 0.2s ease;
+
+	&:active {
+		opacity: 1;
+	}
+
+	@media (hover: hover) {
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+.close-button::before {
+	content: '';
+	position: absolute;
+	transform: translateX(-50%) rotate(45deg);
+	top: 0;
+	left: 50%;
+	inline-size: 3px;
+	block-size: 22px;
+	background-color: #2880ca;
+	border-radius: 2px;
+}
+
+.close-button::after {
+	content: '';
+	position: absolute;
+	transform: translateX(-50%) rotate(-45deg);
+	top: 0;
+	left: 50%;
+	inline-size: 3px;
+	block-size: 22px;
+	background-color: #2880ca;
+	border-radius: 2px;
+}
