@@ -112,7 +112,7 @@ const Places = ({ mapRef }: PlacesProps) => {
 	};
 
 	return (
-		<ul>
+		<ul className={styles.list}>
 			{markers.map((marker) => {
 				return (
 					<li
@@ -120,8 +120,6 @@ const Places = ({ mapRef }: PlacesProps) => {
 						data-coords={marker.position.toString()}
 						className={clsx(styles.marker, 'li-normal')}
 						key={marker.id}
-						// onMouseEnter={handleMouseEnter}
-						// onMouseLeave={handleMouseLeave}
 						onClick={handleLiCLick}
 					>
 						<button
