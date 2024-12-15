@@ -1,0 +1,30 @@
+.header {
+	display: grid;
+	grid-template-columns: 1fr auto auto;
+	gap: 10px;
+	align-items: center;
+	border-bottom: 1px solid #2881ca22;
+	padding-block-end: 10px;
+}
+
+.langButton {
+	cursor: pointer;
+	border: 2px solid #5a5b5b;
+	border-radius: 10px;
+	padding: 6px;
+	background-color: transparent;
+}
+
+.langButton:disabled {
+	border: 2px solid #2880ca;
+	color: #2880ca;
+	font-weight: bold;
+	cursor: default;
+}
+
+.logo {
+	text-transform: uppercase;
+	justify-self: flex-start;
+	color: #2880ca;
+	font-weight: bold;
+}

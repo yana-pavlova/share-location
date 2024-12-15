@@ -6,12 +6,12 @@ import styles from './map.module.scss';
 import { MapContainer, Popup, TileLayer, useMapEvents } from 'react-leaflet';
 import L, { LatLng } from 'leaflet';
 import CustomMarker from '../marker/marker';
-import { TMarker } from '../../types';
 import FindMe from '../findMe/FindMe';
 import { fetchAddress } from '../../utils/api';
 import { customIcon } from '../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMarker, selectMarkers } from '../../state/markersSlice';
+import { useTranslation } from 'react-i18next';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
@@ -41,6 +41,9 @@ const MyMap = ({
 
 	const markers = useSelector(selectMarkers);
 	const dispatch = useDispatch();
+
+	const t = useTranslation().t;
+	const buttonText = t('addPointButton');
 
 	const getAddress = async (latitude: number, longitude: number) => {
 		const address = await fetchAddress(latitude, longitude);
@@ -114,8 +117,12 @@ const MyMap = ({
 				{popupPosition && (
 					<Popup position={popupPosition}>
 						<form action="submit">
-							<button type="submit" onClick={handleSubmitButton}>
-								Создать точку
+							<button
+								className={styles.popupButton}
+								type="submit"
+								onClick={handleSubmitButton}
+							>
+								{buttonText}
 							</button>
 						</form>
 					</Popup>

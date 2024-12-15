@@ -1,17 +1,20 @@
 import styles from './places.module.scss';
 import clsx from 'clsx';
-import { TMarker } from '../../types';
 import { toast } from 'react-toastify';
 import { selectMarkers } from '../../state/markersSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 type PlacesProps = {
-	// markers: TMarker[] | [];
 	mapRef: React.MutableRefObject<L.Map | null>;
 };
 
 const Places = ({ mapRef }: PlacesProps) => {
 	const markers = useSelector(selectMarkers);
+
+	const { t } = useTranslation();
+	const linkCopied = t('linkCopiedText');
+	const linkCopiedErrorText = t('linkCopiedErrorText');
 
 	const handleCopyLinkClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -38,7 +41,7 @@ const Places = ({ mapRef }: PlacesProps) => {
 					document.body.removeChild(textArea);
 
 					if (success) {
-						toast.success('Ссылка скопирована в буфер обмена', {
+						toast.success(linkCopied, {
 							autoClose: 1000,
 							hideProgressBar: true,
 						});
@@ -49,19 +52,19 @@ const Places = ({ mapRef }: PlacesProps) => {
 				} catch (error) {
 					document.body.removeChild(textArea);
 					console.error('Ошибка копирования через fallback:', error);
-					toast.error('Не удалось скопировать ссылку', {
+					toast.error(linkCopied, {
 						autoClose: 1000,
 						hideProgressBar: true,
 					});
-					throw error; // Пробрасываем ошибку дальше
+					throw error;
 				}
 			}
 
 			const res = await toast.promise(
 				navigator.clipboard.writeText(textToCopy),
 				{
-					success: 'Ссылка скопирована в буфер обмена',
-					error: 'Не удалось скопировать ссылку',
+					success: linkCopied,
+					error: linkCopiedErrorText,
 				},
 				{
 					autoClose: 1000,

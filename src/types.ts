@@ -19,3 +19,18 @@ export type TAddress = {
 	house_number?: string;
 	[key: string]: string | undefined;
 };
+
+export type locationText = {
+	title: string;
+	rules: string[];
+	initialPoint: string;
+	addPointButton: string;
+	footerText: string;
+	gettingLocationErrorText: string;
+	forbidfLocationErrorText: string;
+	locationGeneralErrorText: string;
+	locationRequestTimeoutErrorText: string;
+	locationUndefinedErrorText: string;
+	linkCopiedText: string;
+	linkCopiedErrorText: string;
+};

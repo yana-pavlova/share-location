@@ -50,6 +50,16 @@ const markerSlice = createSlice({
 				});
 			}
 		},
+		updateCurrentLocation: (state, action: PayloadAction<string>) => {
+			const markerIndex = state.markers.findIndex((m) => m.currentLocation);
+
+			if (markerIndex !== -1) {
+				state.markers[markerIndex] = {
+					...state.markers[markerIndex],
+					text: action.payload,
+				};
+			}
+		},
 		// TODO: типизировать payload
 		updateAddress: (state, action) => {
 			const markerIndex = state.markers.findIndex(
@@ -68,8 +78,12 @@ const markerSlice = createSlice({
 });
 
 export default markerSlice.reducer;
-export const { addMarker, addCurrentLocation, updateAddress } =
-	markerSlice.actions;
+export const {
+	addMarker,
+	addCurrentLocation,
+	updateAddress,
+	updateCurrentLocation,
+} = markerSlice.actions;
 
 export const selectMarkers = (state: { markers: TMarkersState }) =>
 	state.markers.markers;

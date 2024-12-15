@@ -6,9 +6,16 @@ import Places from '../places/Places';
 import L from 'leaflet';
 import { fetchLocation, fetchAddress } from '../../utils/api';
 import { useDispatch } from 'react-redux';
-import { addCurrentLocation, addMarker } from '../../state/markersSlice';
+import {
+	addCurrentLocation,
+	addMarker,
+	updateCurrentLocation,
+} from '../../state/markersSlice';
 import styles from './app.module.scss';
 import Footer from '../footer/Footer';
+import Header from '../header/Header';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -26,6 +33,9 @@ const App = () => {
 	const [curLocationIsloading, setCurLocationIsloading] =
 		useState<boolean>(false);
 	const mapRef = useRef<L.Map | null>(null);
+	const { t } = useTranslation();
+	const rules = t('rules', { returnObjects: true }) as string[];
+	const initialPointText = t('initialPoint');
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
@@ -86,21 +96,25 @@ const App = () => {
 			const newMarker = {
 				id: uuidv4(),
 				highlighted: false,
-				text: 'Вы здесь',
+				text: initialPointText,
 				position: [currentLocation.latitude, currentLocation.longitude] as [
 					number,
 					number
 				],
 				currentLocation: true,
 			};
-			// dispatch(addMarker(newMarker));
 			dispatch(addCurrentLocation(newMarker));
 			return;
 		}
 	}, [currentLocation]);
 
+	useEffect(() => {
+		dispatch(updateCurrentLocation(initialPointText));
+	}, [i18next.language]);
+
 	return (
 		<>
+			<Header />
 			{curLocationIsloading ? (
 				<p>Loading...</p>
 			) : (
@@ -115,30 +129,11 @@ const App = () => {
 						setCurrentLocation={setCurrentLocation}
 					/>
 					<div className={styles.info}>
-						<h2 className={styles.infoTitle}>How to use the app</h2>
+						<h2 className={styles.infoTitle}>{t('title')}</h2>
 						<ul className={styles.infoItems}>
-							<li>Click on the yellow button to define your location</li>
-							<li>Click on the map to add a new address</li>
-							<li>
-								Hover or click on the address to highlight the respective marker
-								on the map
-							</li>
-							<li>
-								Hover or click on the marker to highlight the respective address
-								above the map
-							</li>
-							<li>
-								Drag the marker to give it a new location. You current location
-								marker is undraggable
-							</li>
-							<li>
-								Click on the copy link button near the address to copy the link
-								to it
-							</li>
-							<li>
-								Paste the copied link in a browser to open the map with the
-								respective address
-							</li>
+							{rules.map((rule, index) => (
+								<li key={index}>{rule}</li>
+							))}
 						</ul>
 					</div>
 				</main>

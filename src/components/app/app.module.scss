@@ -1,13 +1,10 @@
 .container {
-	max-inline-size: 1000px;
-	min-inline-size: 200px;
-	min-block-size: calc(100dvh - 52px);
+	min-block-size: 100dvh;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-start;
 	gap: 10px;
-	margin: auto;
-	padding: 5px;
+	inline-size: 100%;
 }
 
 .info-title {

@@ -6,3 +6,24 @@
 	flex-grow: 1;
 	background-color: antiquewhite;
 }
+
+.popupButton {
+	font-family: 'Golos Text', serif;
+	cursor: pointer;
+	color: #2880ca;
+	border: none;
+	background-color: transparent;
+	transition: color 0.2s ease;
+}
+
+.popupButton:active {
+	// color: #0a3d67;
+	font-weight: bold;
+}
+
+@media (hover: hover) {
+	.popupButton:hover {
+		// color: #0a3d67;
+		font-weight: bold;
+	}
+}

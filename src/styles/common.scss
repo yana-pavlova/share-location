@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap');
+
 html {
 	box-sizing: border-box;
 }
@@ -8,22 +10,42 @@ html {
 	box-sizing: inherit;
 }
 
-#root {
+body {
+	display: flex;
+	flex-direction: column;
+	min-block-size: calc(100dvh - 52px);
+	min-inline-size: 200px;
+	max-inline-size: 1000px;
+	margin: auto;
 	display: flex;
 	flex-direction: column;
 	min-height: 100dvh;
+	padding: 20px;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	min-height: 100dvh;
+	font-family: 'Golos Text', serif;
 }
 
-.marker-highlighted {
-	opacity: 1;
-	transition: opacity 0.3s ease;
+#root {
+	inline-size: 100%;
+	block-size: 100%;
 }
 
 .li-normal {
 	background-color: transparent;
-	transition: background-color 0.3s ease;
 }
 
 .li-highlighted {
-	background-color: aquamarine;
+	font-weight: bold;
+}
+
+.leaflet-popup-content {
+	margin: 10px 15px;
+}
+
+.leaflet-popup-content {
+	inline-size: 100%;
+	text-align: center;
 }
