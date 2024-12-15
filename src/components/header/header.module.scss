@@ -9,10 +9,13 @@
 
 .langButton {
 	cursor: pointer;
-	border: 2px solid #5a5b5b;
 	border-radius: 10px;
 	padding: 6px;
 	background-color: transparent;
+	border: 2px solid #2880ca;
+	color: #2880ca;
+	opacity: 0.4;
+	transition: opacity 0.2s ease, font-weight 0.2s ease;
 }
 
 .langButton:disabled {
@@ -20,6 +23,7 @@
 	color: #2880ca;
 	font-weight: bold;
 	cursor: default;
+	opacity: 1;
 }
 
 .logo {
