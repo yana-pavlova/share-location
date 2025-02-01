@@ -4,7 +4,6 @@
 	gap: 10px;
 	align-items: center;
 	border-bottom: 1px solid #2881ca22;
-	padding-block-end: 10px;
 }
 
 .langButton {
@@ -15,7 +14,9 @@
 	border: 2px solid #2880ca;
 	color: #2880ca;
 	opacity: 0.4;
-	transition: opacity 0.2s ease, font-weight 0.2s ease;
+	transition:
+		opacity 0.2s ease,
+		font-weight 0.2s ease;
 }
 
 .langButton:disabled {

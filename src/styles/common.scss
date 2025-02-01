@@ -13,24 +13,25 @@ html {
 body {
 	display: flex;
 	flex-direction: column;
-	min-block-size: calc(100dvh - 52px);
+	// min-block-size: calc(100dvh - 20px);
+	min-block-size: 100dvh;
 	min-inline-size: 200px;
 	max-inline-size: 1000px;
 	margin: auto;
 	display: flex;
 	flex-direction: column;
-	min-height: 100dvh;
 	padding: 20px;
 	align-items: center;
-	align-content: center;
 	justify-content: center;
-	min-height: 100dvh;
 	font-family: 'Golos Text', serif;
 }
 
 #root {
+	display: flex;
+	flex-direction: column;
 	inline-size: 100%;
-	block-size: 100%;
+	min-block-size: calc(100dvh - 40px);
+	gap: 10px;
 }
 
 .li-normal {

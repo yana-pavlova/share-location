@@ -101,7 +101,7 @@ const App = () => {
 				text: initialPointText,
 				position: [currentLocation.latitude, currentLocation.longitude] as [
 					number,
-					number
+					number,
 				],
 				currentLocation: true,
 			};
@@ -118,7 +118,7 @@ const App = () => {
 		<>
 			<Header />
 			{curLocationIsloading ? (
-				<p>Loading...</p>
+				<main className={styles.container}>Loading...</main>
 			) : (
 				<main className={styles.container}>
 					<ToastContainer />
