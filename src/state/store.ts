@@ -1,4 +1,4 @@
-// TODO: add case ДОБАВИТЬ МАРКЕР
+// TODO: limit the number of markers
 
 import { configureStore } from '@reduxjs/toolkit';
 import markerReducer from './markersSlice';
