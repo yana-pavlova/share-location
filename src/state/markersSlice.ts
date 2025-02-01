@@ -5,8 +5,19 @@ interface TMarkersState {
 	markers: TMarker[];
 }
 
+const loadState = (): TMarker[] | undefined => {
+	// забираем данные из локального хранилища, если они там есть
+	try {
+		const serializedState = localStorage.getItem('markers');
+		return serializedState ? JSON.parse(serializedState) : undefined;
+	} catch (err) {
+		console.error(err);
+		return undefined;
+	}
+};
+
 const initialState: TMarkersState = {
-	markers: [],
+	markers: loadState() || [],
 };
 
 const markerSlice = createSlice({

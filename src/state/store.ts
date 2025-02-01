@@ -9,5 +9,10 @@ export const store = configureStore({
 	},
 });
 
+store.subscribe(() => {
+	const state = store.getState();
+	localStorage.setItem('markers', JSON.stringify(state.markers.markers));
+});
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
