@@ -13,7 +13,6 @@ html {
 body {
 	display: flex;
 	flex-direction: column;
-	// min-block-size: calc(100dvh - 20px);
 	min-block-size: 100dvh;
 	min-inline-size: 200px;
 	max-inline-size: 1000px;
@@ -24,6 +23,10 @@ body {
 	align-items: center;
 	justify-content: center;
 	font-family: 'Golos Text', serif;
+
+	&:has(.modal-opened) {
+		overflow: hidden;
+	}
 }
 
 #root {

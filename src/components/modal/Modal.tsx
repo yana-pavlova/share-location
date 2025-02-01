@@ -11,7 +11,10 @@ const Modal = ({ closeModal }: ModalProps) => {
 
 	return (
 		<>
-			<div onClick={closeModal} className={styles.overlay}></div>
+			<div
+				onClick={closeModal}
+				className={`${styles.overlay} modal-opened`}
+			></div>
 			<div className={styles.info}>
 				<h2 className={styles.infoTitle}>{t('title')}</h2>
 				<ul className={styles.infoItems}>
