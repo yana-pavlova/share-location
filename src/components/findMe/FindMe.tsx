@@ -1,42 +1,36 @@
 import image from '../../img/find-me.svg';
 import styles from './findMe.module.scss';
 import { fetchLocation } from '../../utils/api';
-import { useState } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
+import {
+	addCurrentLocation,
+	selectCurrentLocation,
+} from '../../state/markersSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
-type TFindMeProps = {
-	currentLocation: {
-		latitude: number;
-		longitude: number;
-	} | null;
-	setCurrentLocation: React.Dispatch<
-		React.SetStateAction<{
-			latitude: number;
-			longitude: number;
-		} | null>
-	>;
-};
-
-const FindMe = ({ currentLocation, setCurrentLocation }: TFindMeProps) => {
+const FindMe = () => {
+	const dispatch = useDispatch();
 	const map = useMap();
+	const curLoc = useSelector(selectCurrentLocation);
 
 	const getLocation = async () => {
-		if (!currentLocation) {
+		if (!curLoc) {
 			const coords = await fetchLocation();
 			if (coords) {
-				setCurrentLocation({
-					latitude: coords.latitude,
-					longitude: coords.longitude,
-				});
+				dispatch(
+					addCurrentLocation({
+						position: [coords.latitude, coords.longitude],
+						text: "You're here",
+						id: uuidv4(),
+					})
+				);
+
 				map.setView(L.latLng(coords.latitude, coords.longitude), map.getZoom());
 			}
 		}
-		if (currentLocation)
-			map.setView(
-				L.latLng(currentLocation.latitude, currentLocation.longitude),
-				map.getZoom()
-			);
+		if (curLoc) map.setView(L.latLng(curLoc[0], curLoc[1]), map.getZoom());
 	};
 
 	return (
