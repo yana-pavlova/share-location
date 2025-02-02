@@ -10,6 +10,7 @@ export const engText: locationText = {
 		'Drag the marker to give it a new location. You current location marker is undraggable',
 		'Click on the copy link button near the address to copy the link to it',
 		'Paste the copied link in a browser to open the map with the respective address',
+		'Click on the cross icon near the address to remove it',
 	],
 	initialPoint: "You're here",
 	addPointButton: 'Click to create a map point',

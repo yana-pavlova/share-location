@@ -1,8 +1,8 @@
 import styles from './places.module.scss';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
-import { selectMarkers } from '../../state/markersSlice';
-import { useSelector } from 'react-redux';
+import { selectMarkers, removeMarker } from '../../state/markersSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 type PlacesProps = {
@@ -10,11 +10,22 @@ type PlacesProps = {
 };
 
 const Places = ({ mapRef }: PlacesProps) => {
+	const dispatch = useDispatch();
 	const markers = useSelector(selectMarkers);
 
 	const { t } = useTranslation();
 	const linkCopied = t('linkCopiedText');
 	const linkCopiedErrorText = t('linkCopiedErrorText');
+
+	const handleRemoveMarkerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+		const target = e.target as HTMLElement;
+		const marker = target.closest('li');
+
+		if (marker?.id) {
+			dispatch(removeMarker(marker.id));
+		}
+	};
 
 	const handleCopyLinkClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -123,10 +134,16 @@ const Places = ({ mapRef }: PlacesProps) => {
 						onClick={handleLiCLick}
 					>
 						<button
-							className={styles.copyLinkButton}
+							className={`${styles.copyLinkButton} ${styles.button}`}
 							onClick={handleCopyLinkClick}
 						>
 							🔗
+						</button>
+						<button
+							className={`${styles.removeMarkerButton} ${styles.button}`}
+							onClick={handleRemoveMarkerClick}
+						>
+							❌
 						</button>
 						<span
 							onMouseEnter={handleMouseEnter}

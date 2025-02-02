@@ -136,10 +136,7 @@ const MyMap = ({
 							marker={marker}
 						/>
 					))}
-				<FindMe
-					currentLocation={currentLocation}
-					setCurrentLocation={setCurrentLocation}
-				/>
+				<FindMe />
 			</MapContainer>
 		</>
 	);

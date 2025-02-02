@@ -5,8 +5,19 @@ interface TMarkersState {
 	markers: TMarker[];
 }
 
+const loadState = (): TMarker[] | undefined => {
+	// забираем данные из локального хранилища, если они там есть
+	try {
+		const serializedState = localStorage.getItem('markers');
+		return serializedState ? JSON.parse(serializedState) : undefined;
+	} catch (err) {
+		console.error(err);
+		return undefined;
+	}
+};
+
 const initialState: TMarkersState = {
-	markers: [],
+	markers: loadState() || [],
 };
 
 const markerSlice = createSlice({
@@ -27,29 +38,25 @@ const markerSlice = createSlice({
 				state.markers.push(action.payload);
 			}
 		},
+		removeMarker: (state, action: PayloadAction<string>) => {
+			state.markers = state.markers.filter((m) => m.id !== action.payload);
+		},
 		addCurrentLocation: (state, action: PayloadAction<TMarker>) => {
-			// iterate through markers
-			const markerIndex = state.markers.findIndex(
-				// looking for marker with currentLocation === true
-				(m) => m.currentLocation
-			);
+			const markerIndex = state.markers.findIndex((m) => m.currentLocation);
 
-			// if marker is found
 			if (markerIndex !== -1) {
-				// replace position
 				state.markers[markerIndex] = {
 					...state.markers[markerIndex],
 					position: action.payload.position,
 				};
 			} else {
-				// if marker is not found
-				// add marker with currentLocation === true
 				state.markers.push({
 					...action.payload,
 					currentLocation: true,
 				});
 			}
 		},
+		// TODO remove updateCurrentLocation
 		updateCurrentLocation: (state, action: PayloadAction<string>) => {
 			const markerIndex = state.markers.findIndex((m) => m.currentLocation);
 
@@ -80,6 +87,7 @@ const markerSlice = createSlice({
 export default markerSlice.reducer;
 export const {
 	addMarker,
+	removeMarker,
 	addCurrentLocation,
 	updateAddress,
 	updateCurrentLocation,
@@ -87,3 +95,6 @@ export const {
 
 export const selectMarkers = (state: { markers: TMarkersState }) =>
 	state.markers.markers;
+
+export const selectCurrentLocation = (state: { markers: TMarkersState }) =>
+	state.markers.markers.find((m) => m.currentLocation)?.position;
