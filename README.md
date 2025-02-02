@@ -13,10 +13,9 @@ Try it here: <a href="https://yana-pavlova.github.io/share-location">https://yan
 - Leaflet
 - React Toastify
 
-## How to run the project
+## How to run the project locally
 
 ```
 npm i
-npm run build
 npm run start
 ```
