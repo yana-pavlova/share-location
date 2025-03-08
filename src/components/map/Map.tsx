@@ -18,6 +18,7 @@ import { customIcon } from '../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMarker, selectMarkers } from '../../state/markersSlice';
 import { useTranslation } from 'react-i18next';
+import { SearchInput } from '../searchInput/SearchInput';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
@@ -144,6 +145,7 @@ const MyMap = ({
 							marker={marker}
 						/>
 					))}
+				<SearchInput />
 				<FindMe />
 			</MapContainer>
 		</>
