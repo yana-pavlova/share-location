@@ -3,7 +3,13 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import styles from './map.module.scss';
-import { MapContainer, Popup, TileLayer, useMapEvents } from 'react-leaflet';
+import {
+	MapContainer,
+	Popup,
+	TileLayer,
+	useMapEvents,
+	ZoomControl,
+} from 'react-leaflet';
 import L, { LatLng } from 'leaflet';
 import CustomMarker from '../marker/marker';
 import FindMe from '../findMe/FindMe';
@@ -107,8 +113,10 @@ const MyMap = ({
 				className={styles.map}
 				center={[location.latitude, location.longitude]}
 				zoom={13}
+				zoomControl={false}
 				scrollWheelZoom={true}
 			>
+				<ZoomControl position="bottomleft" />
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
