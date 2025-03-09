@@ -4,18 +4,15 @@ import { Search, ArrowLeft } from 'lucide-react';
 import { searchAdress } from '../../utils/api';
 import { useDebounce } from '../../hooks/useDebounce';
 import { TSearchAddress } from '../../types';
-import { useMap } from 'react-leaflet';
+import { SearchResults } from '../searchResults/SearchResults';
 
 export const SearchInput = () => {
-	const map = useMap();
-
 	const [inputVisible, setInputVisible] = useState(false);
 	const [query, setQuery] = useState('');
 	const [searchAddress, setSearchAddress] = useState<TSearchAddress[] | null>(
 		null
 	);
 	const ref = useRef<HTMLInputElement | null>(null);
-	const searchAddressRef = useRef<HTMLUListElement | null>(null);
 
 	const debouncedSearch = useDebounce(
 		async (query: string, signal: AbortSignal) => {
@@ -37,22 +34,6 @@ export const SearchInput = () => {
 			setSearchAddress(null);
 		}
 	}, [inputVisible]);
-
-	useEffect(() => {
-		const handleWheel = (e: WheelEvent) => {
-			if (searchAddressRef.current)
-				searchAddressRef.current.scrollTop += e.deltaY;
-			map.scrollWheelZoom.disable();
-			e.preventDefault();
-		};
-		searchAddressRef.current?.addEventListener('wheel', handleWheel, {
-			passive: false,
-		});
-
-		return () => {
-			searchAddressRef.current?.removeEventListener('wheel', handleWheel);
-		};
-	}, [searchAddress]);
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -98,34 +79,7 @@ export const SearchInput = () => {
 					</>
 				)}
 			</div>
-			{searchAddress && inputVisible && (
-				<>
-					{searchAddress.length === 0 && (
-						<ul
-							ref={searchAddressRef}
-							className={`${styles.searchResult} custom-scroll`}
-						>
-							<li>No results</li>
-						</ul>
-					)}
-					{searchAddress.length > 0 && (
-						<ul
-							ref={searchAddressRef}
-							className={`${styles.searchResult} custom-scroll`}
-						>
-							{searchAddress.map((address) => (
-								<li key={address.lat}>
-									{address.display_name}
-									<br />
-									{address.lat}
-									<br />
-									{address.lon}
-								</li>
-							))}
-						</ul>
-					)}
-				</>
-			)}
+			{searchAddress && inputVisible && <SearchResults data={searchAddress} />}
 		</>
 	);
 };

@@ -43,28 +43,3 @@
 		}
 	}
 }
-
-.searchResult {
-	position: absolute;
-	top: 50px;
-	left: 12px;
-	z-index: 2000;
-	inline-size: calc(100% - 24px);
-	max-block-size: calc(100% - 60px);
-	border: 2px solid transparent;
-	border-radius: 4px;
-	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
-	background-color: #fff;
-	overflow-y: scroll;
-
-	& li {
-		padding: 5px;
-	}
-
-	& li:not(:last-child)::after {
-		content: '';
-		display: block;
-		block-size: 1px;
-		background-color: #2880ca;
-	}
-}
