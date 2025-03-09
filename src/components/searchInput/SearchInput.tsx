@@ -8,6 +8,7 @@ import { SearchResults } from '../searchResults/SearchResults';
 
 export const SearchInput = () => {
 	const [inputVisible, setInputVisible] = useState(false);
+	const [resultsVisible, setResultsVisible] = useState(false);
 	const [query, setQuery] = useState('');
 	const [searchAddress, setSearchAddress] = useState<TSearchAddress[] | null>(
 		null
@@ -51,6 +52,12 @@ export const SearchInput = () => {
 		return () => controller.abort();
 	}, [query]);
 
+	useEffect(() => {
+		if (searchAddress) {
+			setResultsVisible(true);
+		}
+	}, [searchAddress]);
+
 	return (
 		<>
 			<div className={styles.inputContainer}>
@@ -79,7 +86,12 @@ export const SearchInput = () => {
 					</>
 				)}
 			</div>
-			{searchAddress && inputVisible && <SearchResults data={searchAddress} />}
+			{searchAddress && inputVisible && resultsVisible && (
+				<SearchResults
+					data={searchAddress}
+					setVisibilityFunctions={[setResultsVisible, setInputVisible]}
+				/>
+			)}
 		</>
 	);
 };
