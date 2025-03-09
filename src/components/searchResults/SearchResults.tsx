@@ -10,18 +10,9 @@ export const SearchResults = ({ data }: { data: TSearchAddress[] }) => {
 	const map = useMap();
 
 	useEffect(() => {
-		const handleWheel = (e: WheelEvent) => {
-			if (searchAddressRef.current)
-				searchAddressRef.current.scrollTop += e.deltaY;
-			map.scrollWheelZoom.disable();
-			e.preventDefault();
-		};
-		searchAddressRef.current?.addEventListener('wheel', handleWheel, {
-			passive: false,
-		});
-
+		map.scrollWheelZoom.disable();
 		return () => {
-			searchAddressRef.current?.removeEventListener('wheel', handleWheel);
+			map.scrollWheelZoom.enable();
 		};
 	}, [data]);
 
