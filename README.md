@@ -11,7 +11,9 @@ Try it here: <a href="https://yana-pavlova.github.io/share-location">https://yan
 - Webpack
 - uuid
 - Leaflet
+- Nominatim API
 - React Toastify
+- Lucide
 
 ## How to run the project locally
 
