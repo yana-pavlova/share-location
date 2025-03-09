@@ -51,10 +51,6 @@ export const SearchResults = ({
 						data-coords={`${address.lat},${address.lon}`}
 					>
 						{address.display_name}
-						<br />
-						{address.lat}
-						<br />
-						{address.lon}
 					</li>
 				))
 			)}
