@@ -51,3 +51,12 @@ export const fetchAddress = async (
 	const data = await response.json();
 	return data.address;
 };
+
+export const searchAdress = async (query: string): Promise<any> => {
+	const res = await fetch(
+		'https://nominatim.openstreetmap.org/search?format=json&q=' + query
+	);
+	const data = await res.json();
+
+	return data;
+};
