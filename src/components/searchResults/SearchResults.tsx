@@ -4,7 +4,7 @@ import styles from './searchResults.module.scss';
 import { useMap } from 'react-leaflet';
 
 export const SearchResults = ({ data }: { data: TSearchAddress[] }) => {
-	const [results, setResults] = useState<TSearchAddress[]>(data);
+	// const [results, setResults] = useState<TSearchAddress[]>(data);
 
 	const searchAddressRef = useRef<HTMLUListElement>(null);
 	const map = useMap();
@@ -23,17 +23,17 @@ export const SearchResults = ({ data }: { data: TSearchAddress[] }) => {
 		return () => {
 			searchAddressRef.current?.removeEventListener('wheel', handleWheel);
 		};
-	}, [results]);
+	}, [data]);
 
 	return (
 		<ul
 			ref={searchAddressRef}
 			className={`${styles.searchResult} custom-scroll`}
 		>
-			{results.length === 0 ? (
+			{data.length === 0 ? (
 				<li>No results</li>
 			) : (
-				results.map((address) => (
+				data.map((address) => (
 					<li key={address.lat}>
 						{address.display_name}
 						<br />
