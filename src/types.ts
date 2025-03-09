@@ -34,3 +34,9 @@ export type locationText = {
 	linkCopiedText: string;
 	linkCopiedErrorText: string;
 };
+
+export type TSearchAddress = {
+	lat: number;
+	lon: number;
+	display_name: string;
+};
