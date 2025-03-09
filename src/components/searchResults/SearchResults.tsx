@@ -45,7 +45,11 @@ export const SearchResults = ({
 				<li>No results</li>
 			) : (
 				data.map((address) => (
-					<li key={address.lat}>
+					<li
+						onClick={handleClick}
+						key={address.lat}
+						data-coords={`${address.lat},${address.lon}`}
+					>
 						{address.display_name}
 						<br />
 						{address.lat}
