@@ -33,7 +33,7 @@ export const SearchInput = () => {
 
 	const sortAddresses = (addresses: TSearchAddress[]) => {
 		return addresses.sort((a, b) => {
-			return a.place_rank - b.place_rank;
+			return b.importance - a.importance;
 		});
 	};
 
