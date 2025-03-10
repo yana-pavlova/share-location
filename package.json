@@ -22,6 +22,7 @@
 		"@yandex/ymaps3-types": "^1.0.15194938",
 		"autoprefixer": "^10.4.20",
 		"clean-webpack-plugin": "^4.0.0",
+		"copy-webpack-plugin": "^13.0.0",
 		"cross-env": "^7.0.3",
 		"css-loader": "^7.1.2",
 		"cssnano": "^7.0.6",

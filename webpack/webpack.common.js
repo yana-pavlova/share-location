@@ -1,6 +1,7 @@
 const HTMLWebpackPlugins = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack'); //подключаем webpack для использования встроенного плагина EnvironmentPlugin
 const dotenv = require('dotenv').config({
@@ -89,6 +90,14 @@ module.exports = {
 		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin({
 			filename: 'static/styles/[name].[contenthash].css',
+		}),
+		new CopyWebpackPlugin({
+			patterns: [
+				{
+					from: path.resolve(__dirname, '../public/favicon'), // Откуда копировать
+					to: 'favicon', // Куда положить в `dist/`
+				},
+			],
 		}),
 		//Плагин позволяет установить переменные окружения, можно переопределить переменную из блока script файла package.json
 		new webpack.EnvironmentPlugin({
