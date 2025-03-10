@@ -28,13 +28,22 @@ export const SearchInput = () => {
 		});
 	};
 
+	const sortAddresses = (addresses: TSearchAddress[]) => {
+		return addresses.sort((a, b) => {
+			return a.place_rank - b.place_rank;
+		});
+	};
+
 	const debouncedSearch = useDebounce(
 		async (query: string, signal: AbortSignal) => {
 			const address = await searchAdress(query);
 
 			if (!signal.aborted) {
 				const filteredAddresses = filterUniqueAddresses(address);
-				setSearchAddress(filteredAddresses);
+				const sortedAddresses = sortAddresses(filteredAddresses);
+				console.log(sortedAddresses);
+
+				setSearchAddress(sortedAddresses);
 			}
 		},
 		300
