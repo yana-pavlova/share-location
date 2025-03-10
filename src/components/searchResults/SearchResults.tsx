@@ -40,6 +40,8 @@ export const SearchResults = ({
 		<ul
 			ref={searchAddressRef}
 			className={`${styles.searchResult} custom-scroll`}
+			onWheel={(e) => e.stopPropagation()}
+			onTouchMove={(e) => e.stopPropagation()}
 		>
 			{data.length === 0 ? (
 				<li>No results</li>
