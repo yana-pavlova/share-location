@@ -15,12 +15,26 @@ export const SearchInput = () => {
 	);
 	const ref = useRef<HTMLInputElement | null>(null);
 
+	const filterUniqueAddresses = (addresses: TSearchAddress[]) => {
+		const seen = new Set<string>();
+
+		return addresses.filter(({ lat, lon }) => {
+			const key = `${lat},${lon}`;
+			if (seen.has(key)) {
+				return false;
+			}
+			seen.add(key);
+			return true;
+		});
+	};
+
 	const debouncedSearch = useDebounce(
 		async (query: string, signal: AbortSignal) => {
 			const address = await searchAdress(query);
 
 			if (!signal.aborted) {
-				setSearchAddress(address);
+				const filteredAddresses = filterUniqueAddresses(address);
+				setSearchAddress(filteredAddresses);
 			}
 		},
 		300
