@@ -16,14 +16,17 @@ export const SearchInput = () => {
 	const ref = useRef<HTMLInputElement | null>(null);
 
 	const filterUniqueAddresses = (addresses: TSearchAddress[]) => {
-		const seen = new Set<string>();
+		const seenNames = new Set<string>();
+		const seenCoords = new Set<string>();
 
-		return addresses.filter(({ lat, lon }) => {
-			const key = `${lat},${lon}`;
-			if (seen.has(key)) {
+		return addresses.filter(({ display_name, lat, lon }) => {
+			const nameKey = `${display_name}`;
+			const coordsKey = `${lat},${lon}`;
+			if (seenNames.has(nameKey) || seenCoords.has(coordsKey)) {
 				return false;
 			}
-			seen.add(key);
+			seenNames.add(nameKey);
+			seenCoords.add(coordsKey);
 			return true;
 		});
 	};
