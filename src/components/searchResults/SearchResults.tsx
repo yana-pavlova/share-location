@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { TSearchAddress } from '../../types';
 import styles from './searchResults.module.scss';
 import { useMap } from 'react-leaflet';
@@ -47,7 +47,7 @@ export const SearchResults = ({
 				data.map((address) => (
 					<li
 						onClick={handleClick}
-						key={address.lat}
+						key={address.place_id}
 						data-coords={`${address.lat},${address.lon}`}
 					>
 						{address.display_name}

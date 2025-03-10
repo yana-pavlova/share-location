@@ -40,4 +40,5 @@ export type TSearchAddress = {
 	lon: number;
 	display_name: string;
 	place_rank: number;
+	place_id: number;
 };
