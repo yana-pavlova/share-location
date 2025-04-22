@@ -26,24 +26,9 @@ type MapProps = {
 		latitude: number;
 		longitude: number;
 	};
-	currentLocation: {
-		latitude: number;
-		longitude: number;
-	} | null;
-	setCurrentLocation: React.Dispatch<
-		React.SetStateAction<{
-			latitude: number;
-			longitude: number;
-		} | null>
-	>;
 };
 
-const MyMap = ({
-	mapRef,
-	location,
-	currentLocation,
-	setCurrentLocation,
-}: MapProps) => {
+const MyMap = ({ mapRef, location }: MapProps) => {
 	const [popupPosition, setPopupPosition] = useState<null | LatLng>(null);
 
 	const markers = useSelector(selectMarkers);
