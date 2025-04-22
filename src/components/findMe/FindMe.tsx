@@ -1,4 +1,3 @@
-import image from '../../img/find-me.svg';
 import styles from './findMe.module.scss';
 import { fetchLocation } from '../../utils/api';
 import { useMap } from 'react-leaflet';
@@ -7,6 +6,7 @@ import { addCurrentLocation } from '../../state/markersSlice';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { MAX_ZOOM } from '../../utils/constants';
+import { MousePointer2 } from 'lucide-react';
 
 const FindMe = () => {
 	const dispatch = useDispatch();
@@ -28,12 +28,9 @@ const FindMe = () => {
 	};
 
 	return (
-		<img
-			onClick={getLocation}
-			className={styles.image}
-			src={image}
-			alt="Find me"
-		/>
+		<div className={styles.container} onClick={getLocation}>
+			<MousePointer2 style={{ transform: 'scaleX(-1)' }} />
+		</div>
 	);
 };
 
