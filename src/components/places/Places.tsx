@@ -1,7 +1,11 @@
 import styles from './places.module.scss';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
-import { selectMarkers, removeMarker } from '../../state/markersSlice';
+import {
+	selectMarkers,
+	removeMarker,
+	removeAllMarkers,
+} from '../../state/markersSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useLayoutEffect, useRef } from 'react';
@@ -24,6 +28,10 @@ const Places = ({ mapRef }: PlacesProps) => {
 			listRef.current.scrollTop = listRef.current.scrollHeight;
 		}
 	});
+
+	const handleRemoveAllPlaces = () => {
+		dispatch(removeAllMarkers());
+	};
 
 	const handleRemoveMarkerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -131,38 +139,43 @@ const Places = ({ mapRef }: PlacesProps) => {
 	};
 
 	return (
-		<ul ref={listRef} className={styles.list}>
-			{markers.map((marker) => {
-				return (
-					<li
-						id={marker.id}
-						data-coords={marker.position.toString()}
-						className={clsx(styles.marker, 'li-normal')}
-						key={marker.id}
-						onClick={handleLiCLick}
-					>
-						<button
-							className={`${styles.copyLinkButton} ${styles.button}`}
-							onClick={handleCopyLinkClick}
+		<>
+			<button onClick={handleRemoveAllPlaces} className={styles.button}>
+				Remove all places
+			</button>
+			<ul ref={listRef} className={styles.list}>
+				{markers.map((marker) => {
+					return (
+						<li
+							id={marker.id}
+							data-coords={marker.position.toString()}
+							className={clsx(styles.marker, 'li-normal')}
+							key={marker.id}
+							onClick={handleLiCLick}
 						>
-							🔗
-						</button>
-						<button
-							className={`${styles.removeMarkerButton} ${styles.button}`}
-							onClick={handleRemoveMarkerClick}
-						>
-							❌
-						</button>
-						<span
-							onMouseEnter={handleMouseEnter}
-							onMouseLeave={handleMouseLeave}
-						>
-							{marker.text}
-						</span>
-					</li>
-				);
-			})}
-		</ul>
+							<button
+								className={`${styles.copyLinkButton} ${styles.button}`}
+								onClick={handleCopyLinkClick}
+							>
+								🔗
+							</button>
+							<button
+								className={`${styles.removeMarkerButton} ${styles.button}`}
+								onClick={handleRemoveMarkerClick}
+							>
+								❌
+							</button>
+							<span
+								onMouseEnter={handleMouseEnter}
+								onMouseLeave={handleMouseLeave}
+							>
+								{marker.text}
+							</span>
+						</li>
+					);
+				})}
+			</ul>
+		</>
 	);
 };
 

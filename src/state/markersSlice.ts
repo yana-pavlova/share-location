@@ -41,6 +41,9 @@ const markerSlice = createSlice({
 		removeMarker: (state, action: PayloadAction<string>) => {
 			state.markers = state.markers.filter((m) => m.id !== action.payload);
 		},
+		removeAllMarkers: (state) => {
+			state.markers = state.markers.filter((m) => m.currentLocation);
+		},
 		addCurrentLocation: (state, action: PayloadAction<TMarker>) => {
 			const markerIndex = state.markers.findIndex((m) => m.currentLocation);
 
@@ -88,6 +91,7 @@ export default markerSlice.reducer;
 export const {
 	addMarker,
 	removeMarker,
+	removeAllMarkers,
 	addCurrentLocation,
 	updateAddress,
 	updateCurrentLocation,
