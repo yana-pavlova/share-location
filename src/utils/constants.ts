@@ -11,3 +11,5 @@ export const customIcon = L.icon({
 	shadowAnchor: [12, 41],
 	popupAnchor: [1, -34],
 });
+
+export const MAX_ZOOM = 18;

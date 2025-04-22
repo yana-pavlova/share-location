@@ -6,6 +6,7 @@ import L from 'leaflet';
 import { addCurrentLocation } from '../../state/markersSlice';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { MAX_ZOOM } from '../../utils/constants';
 
 const FindMe = () => {
 	const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const FindMe = () => {
 				})
 			);
 
-			map.setView(L.latLng(coords.latitude, coords.longitude), map.getZoom());
+			map.setView(L.latLng(coords.latitude, coords.longitude), MAX_ZOOM);
 		}
 	};
 
