@@ -6,6 +6,7 @@ import { TMarker } from '../../types';
 import { fetchAddress } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import { updateAddress } from '../../state/markersSlice';
+import { MAX_ZOOM } from '../../utils/constants';
 
 type CustomMarkerProps = {
 	id: string;
@@ -40,7 +41,7 @@ const CustomMarker = ({ id, marker, icon }: CustomMarkerProps) => {
 	};
 
 	const handleClick = (e: LeafletMouseEvent) => {
-		map.setView(e.target.getLatLng(), map.getZoom());
+		map.setView(e.target.getLatLng(), MAX_ZOOM);
 	};
 
 	const handleMouseOver = (e: LeafletMouseEvent) => {
