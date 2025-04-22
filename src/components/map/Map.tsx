@@ -14,7 +14,7 @@ import L, { LatLng } from 'leaflet';
 import CustomMarker from '../marker/marker';
 import FindMe from '../findMe/FindMe';
 import { fetchAddress } from '../../utils/api';
-import { customIcon } from '../../utils/constants';
+import { customIcon, MAX_ZOOM } from '../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMarker, selectMarkers } from '../../state/markersSlice';
 import { useTranslation } from 'react-i18next';
@@ -87,7 +87,8 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 
 	useEffect(() => {
 		mapRef.current?.setView(
-			location ? [location.latitude, location.longitude] : [51.505, -0.09]
+			location ? [location.latitude, location.longitude] : [51.505, -0.09],
+			MAX_ZOOM
 		);
 	}, [location]);
 
