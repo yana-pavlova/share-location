@@ -4,8 +4,6 @@
 	"description": "List of places",
 	"main": "index.tsx",
 	"scripts": {
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d dist",
 		"build": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.js --env env=prod",
 		"start": "webpack serve --config webpack/webpack.config.js --env env=dev"
 	},
