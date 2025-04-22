@@ -7,10 +7,6 @@ export const fetchLocation = async (): Promise<
 > => {
 	let loadingToastId;
 
-	loadingToastId = toast.loading('Getting your location...', {
-		autoClose: 3000,
-	});
-
 	try {
 		const position = await geoTimeOut(5000);
 		const { latitude, longitude } = position.coords;
