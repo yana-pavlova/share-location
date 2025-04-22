@@ -2,7 +2,7 @@
 
 A fast and simple way to share a location on the map — no app needed.
 Works right in the browser.
-
+![image](https://github.com/user-attachments/assets/d006844f-7424-4153-8a25-bb7311caefe1)
 🌐 Try it here: <a href="https://yana-pavlova.github.io/share-location">https://yana-pavlova.github.io/share-location</a>
 
 ## ✨ About the Project
