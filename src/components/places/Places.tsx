@@ -159,12 +159,14 @@ const Places = ({ mapRef }: PlacesProps) => {
 							>
 								🔗
 							</button>
-							<button
-								className={`${styles.removeMarkerButton} ${styles.button}`}
-								onClick={handleRemoveMarkerClick}
-							>
-								❌
-							</button>
+							{!marker.currentLocation && (
+								<button
+									className={`${styles.removeMarkerButton} ${styles.button}`}
+									onClick={handleRemoveMarkerClick}
+								>
+									❌
+								</button>
+							)}
 							<span
 								onMouseEnter={handleMouseEnter}
 								onMouseLeave={handleMouseLeave}
