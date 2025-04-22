@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { selectMarkers, removeMarker } from '../../state/markersSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useLayoutEffect, useRef } from 'react';
 
 type PlacesProps = {
 	mapRef: React.MutableRefObject<L.Map | null>;
@@ -16,6 +17,13 @@ const Places = ({ mapRef }: PlacesProps) => {
 	const { t } = useTranslation();
 	const linkCopied = t('linkCopiedText');
 	const linkCopiedErrorText = t('linkCopiedErrorText');
+
+	const listRef = useRef<HTMLUListElement>(null);
+	useLayoutEffect(() => {
+		if (listRef.current) {
+			listRef.current.scrollTop = listRef.current.scrollHeight;
+		}
+	});
 
 	const handleRemoveMarkerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -123,7 +131,7 @@ const Places = ({ mapRef }: PlacesProps) => {
 	};
 
 	return (
-		<ul className={styles.list}>
+		<ul ref={listRef} className={styles.list}>
 			{markers.map((marker) => {
 				return (
 					<li
