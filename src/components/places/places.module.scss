@@ -1,7 +1,10 @@
 .list {
+	inline-size: 100%;
+	max-block-size: 200px;
 	display: flex;
 	flex-direction: column;
 	gap: 7px;
+	overflow: scroll;
 }
 
 .marker {
