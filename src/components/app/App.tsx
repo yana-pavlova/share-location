@@ -68,6 +68,12 @@ const App = () => {
 				};
 				dispatch(addMarker(newMarker));
 				setLocation({ latitude: +lat, longitude: +lng });
+
+				params.delete('lat');
+				params.delete('lng');
+
+				const newUrl = window.location.origin + window.location.pathname;
+				window.history.replaceState(null, '', newUrl);
 			}
 		};
 
