@@ -22,10 +22,10 @@ import { useTranslation } from 'react-i18next';
 const App = () => {
 	const dispatch = useDispatch();
 
-	const curLoc = useSelector(selectCurrentLocation);
-
 	// currentLocation is the user's location
-	const [currentLocation, setCurrentLocation] = useState(curLoc);
+	const [currentLocation, setCurrentLocation] = useState<
+		undefined | [number, number]
+	>(undefined);
 
 	// location is the map center
 	const [location, setLocation] = useState<{
@@ -87,11 +87,7 @@ const App = () => {
 			getAddress();
 			// if we don't have lat and lng in url, we show the user's location by default
 		} else {
-			if (curLoc) {
-				setLocation({ latitude: curLoc[0], longitude: curLoc[1] });
-			} else {
-				getLocation();
-			}
+			getLocation();
 		}
 	}, []);
 
