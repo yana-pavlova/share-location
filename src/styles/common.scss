@@ -41,8 +41,8 @@ body {
 	background-color: transparent;
 }
 
-.li-highlighted {
-	font-weight: bold;
+.li-highlighted span {
+	opacity: 1;
 }
 
 .leaflet-popup-content {
