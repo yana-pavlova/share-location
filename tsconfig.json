@@ -17,8 +17,9 @@
 		"allowJs": true /* Allow javascript files to be compiled. Useful when migrating JS to TS */,
 		"allowSyntheticDefaultImports": true,
 		"noImplicitAny": true /* Makes sure you don't have implicit any types */,
-		"noImplicitReturns": true /* All functions should return something */
+		"noImplicitReturns": true /* All functions should return something */,
+		"outDir": "./dist/"
 	},
-	"outDir": "./dist/",
+
 	"include": ["src/**/*"]
 }
