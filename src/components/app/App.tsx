@@ -129,8 +129,8 @@ const App = () => {
 					>
 						{t('title')}
 					</p>
-					<Places mapRef={mapRef} />
 					<MyMap mapRef={mapRef} location={location} />
+					<Places mapRef={mapRef} />
 					{isModalOpen && <Modal closeModal={() => setIsModalOpen(false)} />}
 				</main>
 			)}
