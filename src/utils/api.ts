@@ -24,10 +24,7 @@ export const fetchLocation = async (): Promise<
 		} else if (err.code === 3) {
 			toast.error('Location request timed out. Please, try again');
 		} else {
-			toast.error(`Something went wrong. Please, try again`, {
-				hideProgressBar: true,
-				autoClose: 3000,
-			});
+			toast.error(`Something went wrong. Please, try again`);
 		}
 		return undefined;
 	} finally {
