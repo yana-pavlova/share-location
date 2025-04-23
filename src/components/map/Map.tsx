@@ -1,5 +1,3 @@
-// TODO: get rid of props drilling (setCurrentLocation is being passed from App through Map to FindMe)
-
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import styles from './map.module.scss';
