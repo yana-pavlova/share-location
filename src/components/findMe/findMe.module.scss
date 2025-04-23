@@ -1,21 +1,26 @@
-.image {
+.container {
 	position: absolute;
-	bottom: 30px;
-	right: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	inline-size: 30px;
+	block-size: 30px;
+	bottom: calc(12px + 16.8px);
+	right: 12px;
 	z-index: 500;
-	inline-size: 50px;
+	border: 2px solid transparent;
+	border-radius: 4px;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+	background-color: #fff;
 	cursor: pointer;
-	filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.4));
-	transform: scale(0.9);
-	transition: transform 0.2s ease;
+
+	@media (hover: hover) {
+		&:hover {
+			background-color: #f4f4f4;
+		}
+	}
 
 	&:active {
-		transform: scale(1);
-	}
-}
-
-@media (hover: hover) {
-	.image:hover {
-		transform: scale(1);
+		background-color: #f4f4f4;
 	}
 }

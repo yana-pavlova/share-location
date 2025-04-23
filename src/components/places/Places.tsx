@@ -140,38 +140,44 @@ const Places = ({ mapRef }: PlacesProps) => {
 
 	return (
 		<>
-			<button onClick={handleRemoveAllPlaces} className={styles.button}>
-				Remove all places
-			</button>
+			{markers.length > 1 && (
+				<button onClick={handleRemoveAllPlaces} className={styles.button}>
+					Remove all places
+				</button>
+			)}
 			<ul ref={listRef} className={styles.list}>
 				{markers.map((marker) => {
 					return (
-						<li
-							id={marker.id}
-							data-coords={marker.position.toString()}
-							className={clsx(styles.marker, 'li-normal')}
-							key={marker.id}
-							onClick={handleLiCLick}
-						>
-							<button
-								className={`${styles.copyLinkButton} ${styles.button}`}
-								onClick={handleCopyLinkClick}
+						!marker.currentLocation && (
+							<li
+								id={marker.id}
+								data-coords={marker.position.toString()}
+								className={clsx(styles.marker, 'li-normal')}
+								key={marker.id}
+								onClick={handleLiCLick}
 							>
-								🔗
-							</button>
-							<button
-								className={`${styles.removeMarkerButton} ${styles.button}`}
-								onClick={handleRemoveMarkerClick}
-							>
-								❌
-							</button>
-							<span
-								onMouseEnter={handleMouseEnter}
-								onMouseLeave={handleMouseLeave}
-							>
-								{marker.text}
-							</span>
-						</li>
+								<button
+									className={`${styles.copyLinkButton} ${styles.button}`}
+									onClick={handleCopyLinkClick}
+								>
+									🔗
+								</button>
+								{!marker.currentLocation && (
+									<button
+										className={`${styles.removeMarkerButton} ${styles.button}`}
+										onClick={handleRemoveMarkerClick}
+									>
+										❌
+									</button>
+								)}
+								<span
+									onMouseEnter={handleMouseEnter}
+									onMouseLeave={handleMouseLeave}
+								>
+									{marker.text}
+								</span>
+							</li>
+						)
 					);
 				})}
 			</ul>

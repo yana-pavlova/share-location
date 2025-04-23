@@ -1,65 +1,44 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from './searchInput.module.scss';
 import { Search, ArrowLeft } from 'lucide-react';
-import { searchAdress } from '../../utils/api';
+import { searchAddress } from '../../utils/api';
 import { useDebounce } from '../../hooks/useDebounce';
 import { TSearchAddress } from '../../types';
 import { SearchResults } from '../searchResults/SearchResults';
+import { useMap } from 'react-leaflet';
 
 export const SearchInput = () => {
 	const [inputVisible, setInputVisible] = useState(false);
 	const [resultsVisible, setResultsVisible] = useState(false);
 	const [query, setQuery] = useState('');
-	const [searchAddress, setSearchAddress] = useState<TSearchAddress[] | null>(
+	const [searchedAddress, setSearchAddress] = useState<TSearchAddress[] | null>(
 		null
 	);
 	const ref = useRef<HTMLInputElement | null>(null);
-
-	const filterUniqueAddresses = (addresses: TSearchAddress[]) => {
-		const seenNames = new Set<string>();
-		const seenCoords = new Set<string>();
-
-		return addresses.filter(({ display_name, lat, lon }) => {
-			const nameKey = `${display_name}`;
-			const coordsKey = `${lat},${lon}`;
-			if (seenNames.has(nameKey) || seenCoords.has(coordsKey)) {
-				return false;
-			}
-			seenNames.add(nameKey);
-			seenCoords.add(coordsKey);
-			return true;
-		});
-	};
-
-	const sortAddresses = (addresses: TSearchAddress[]) => {
-		return addresses.sort((a, b) => {
-			return b.importance - a.importance;
-		});
-	};
+	const map = useMap();
+	const bounds = map.getBounds();
+	const sw = bounds.getSouthWest();
+	const ne = bounds.getNorthEast();
+	const viewbox = [
+		sw.lng, // min lon
+		sw.lat, // min lat
+		ne.lng, // max lon
+		ne.lat, // max lat
+	];
 
 	const debouncedSearch = useDebounce(
 		async (query: string, signal: AbortSignal) => {
-			const address = await searchAdress(query);
+			const addresses: TSearchAddress[] = await searchAddress(query, viewbox);
 
 			if (!signal.aborted) {
-				const filteredAddresses = filterUniqueAddresses(address);
-				const sortedAddresses = sortAddresses(filteredAddresses);
-				console.log(sortedAddresses);
-
-				setSearchAddress(sortedAddresses);
+				setSearchAddress(addresses);
 			}
 		},
 		300
 	);
 
 	useEffect(() => {
-		if (inputVisible) {
-			ref.current?.focus();
-		}
-
-		if (!inputVisible) {
-			setSearchAddress(null);
-		}
+		inputVisible ? ref.current?.focus() : setSearchAddress(null);
 	}, [inputVisible]);
 
 	useEffect(() => {
@@ -79,10 +58,10 @@ export const SearchInput = () => {
 	}, [query]);
 
 	useEffect(() => {
-		if (searchAddress) {
+		if (searchedAddress) {
 			setResultsVisible(true);
 		}
-	}, [searchAddress]);
+	}, [searchedAddress]);
 
 	return (
 		<>
@@ -112,9 +91,9 @@ export const SearchInput = () => {
 					</>
 				)}
 			</div>
-			{searchAddress && inputVisible && resultsVisible && (
+			{searchedAddress && inputVisible && resultsVisible && (
 				<SearchResults
-					data={searchAddress}
+					data={searchedAddress}
 					setVisibilityFunctions={[setResultsVisible, setInputVisible]}
 				/>
 			)}

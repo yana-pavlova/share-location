@@ -5,10 +5,11 @@ import MyMap from '../map/Map';
 import Places from '../places/Places';
 import L from 'leaflet';
 import { fetchLocation, fetchAddress } from '../../utils/api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	addCurrentLocation,
 	addMarker,
+	selectCurrentLocation,
 	updateCurrentLocation,
 } from '../../state/markersSlice';
 import styles from './app.module.scss';
@@ -22,10 +23,10 @@ const App = () => {
 	const dispatch = useDispatch();
 
 	// currentLocation is the user's location
-	const [currentLocation, setCurrentLocation] = useState<null | {
-		latitude: number;
-		longitude: number;
-	}>(null);
+	const [currentLocation, setCurrentLocation] = useState<
+		undefined | [number, number]
+	>(undefined);
+
 	// location is the map center
 	const [location, setLocation] = useState<{
 		latitude: number;
@@ -67,6 +68,12 @@ const App = () => {
 				};
 				dispatch(addMarker(newMarker));
 				setLocation({ latitude: +lat, longitude: +lng });
+
+				params.delete('lat');
+				params.delete('lng');
+
+				const newUrl = window.location.origin + window.location.pathname;
+				window.history.replaceState(null, '', newUrl);
 			}
 		};
 
@@ -76,10 +83,7 @@ const App = () => {
 			setCurLocationIsloading(false);
 
 			if (coords) {
-				setCurrentLocation({
-					latitude: coords.latitude,
-					longitude: coords.longitude,
-				});
+				setCurrentLocation([coords.latitude, coords.longitude]);
 				setLocation({ latitude: coords.latitude, longitude: coords.longitude });
 			}
 		};
@@ -99,10 +103,7 @@ const App = () => {
 				id: uuidv4(),
 				highlighted: false,
 				text: initialPointText,
-				position: [currentLocation.latitude, currentLocation.longitude] as [
-					number,
-					number,
-				],
+				position: currentLocation as [number, number],
 				currentLocation: true,
 			};
 			dispatch(addCurrentLocation(newMarker));
@@ -128,14 +129,8 @@ const App = () => {
 					>
 						{t('title')}
 					</p>
+					<MyMap mapRef={mapRef} location={location} />
 					<Places mapRef={mapRef} />
-					<MyMap
-						mapRef={mapRef}
-						location={location}
-						//? put currentLocation into contextProvider
-						currentLocation={currentLocation}
-						setCurrentLocation={setCurrentLocation}
-					/>
 					{isModalOpen && <Modal closeModal={() => setIsModalOpen(false)} />}
 				</main>
 			)}

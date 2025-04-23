@@ -1,15 +1,13 @@
 import { toast } from 'react-toastify';
 import { TAddress } from '../types';
 import geoTimeOut from './geoTimeOut';
+import { t } from './constants';
+import i18n from '../i18n';
 
 export const fetchLocation = async (): Promise<
 	{ latitude: number; longitude: number } | undefined
 > => {
 	let loadingToastId;
-
-	loadingToastId = toast.loading('Getting your location...', {
-		autoClose: 3000,
-	});
 
 	try {
 		const position = await geoTimeOut(5000);
@@ -18,20 +16,13 @@ export const fetchLocation = async (): Promise<
 		return { latitude, longitude };
 	} catch (err: any) {
 		if (err.code === 1) {
-			toast.error(
-				'Please, enable geolocation on your device or browser. Then try again'
-			);
+			toast.error(t('forbidfLocationErrorText'));
 		} else if (err.code === 2) {
-			toast.error(
-				'Unfortunately, we could not get your location. Please, try again'
-			);
+			toast.error(t('locationGeneralErrorText'));
 		} else if (err.code === 3) {
-			toast.error('Location request timed out. Please, try again');
+			toast.error(t('locationRequestTimeoutErrorText'));
 		} else {
-			toast.error(`Something went wrong. Please, try again`, {
-				hideProgressBar: true,
-				autoClose: 3000,
-			});
+			toast.error(t('locationUndefinedErrorText'));
 		}
 		return undefined;
 	} finally {
@@ -52,9 +43,17 @@ export const fetchAddress = async (
 	return data.address;
 };
 
-export const searchAdress = async (query: string): Promise<any> => {
+export const searchAddress = async (
+	query: string,
+	viewBox?: number[]
+): Promise<any> => {
 	const res = await fetch(
-		'https://nominatim.openstreetmap.org/search?format=json&q=' + query
+		`https://nominatim.openstreetmap.org/search?format=json&q=${query}&viewbox=${viewBox?.join(',')}`,
+		{
+			headers: {
+				'Accept-Language': i18n.language,
+			},
+		}
 	);
 	const data = await res.json();
 
