@@ -9,9 +9,8 @@
 
 .marker {
 	inline-size: 100%;
-	display: flex;
-	align-items: center;
-	gap: 5px;
+	display: grid;
+	grid-template-columns: 1fr auto auto;
 	cursor: pointer;
 
 	& span {

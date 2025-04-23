@@ -107,6 +107,12 @@ const Places = ({ mapRef }: PlacesProps) => {
 								key={marker.id}
 								onClick={handleLiCLick}
 							>
+								<span
+									onMouseEnter={handleMouseEnter}
+									onMouseLeave={handleMouseLeave}
+								>
+									{marker.text}
+								</span>
 								<button
 									className={`${styles.copyLinkButton} ${styles.button}`}
 									onClick={handleCopyLinkClick}
@@ -119,12 +125,6 @@ const Places = ({ mapRef }: PlacesProps) => {
 								>
 									<Trash2 size={16} />
 								</button>
-								<span
-									onMouseEnter={handleMouseEnter}
-									onMouseLeave={handleMouseLeave}
-								>
-									{marker.text}
-								</span>
 							</li>
 						)
 					);
