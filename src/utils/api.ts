@@ -43,9 +43,12 @@ export const fetchAddress = async (
 	return data.address;
 };
 
-export const searchAddress = async (query: string): Promise<any> => {
+export const searchAddress = async (
+	query: string,
+	viewBox?: number[]
+): Promise<any> => {
 	const res = await fetch(
-		`https://nominatim.openstreetmap.org/search?format=json&q=${query}`,
+		`https://nominatim.openstreetmap.org/search?format=json&q=${query}&viewbox=${viewBox?.join(',')}`,
 		{
 			headers: {
 				'Accept-Language': i18n.language,
