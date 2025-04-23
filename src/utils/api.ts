@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import { TAddress } from '../types';
 import geoTimeOut from './geoTimeOut';
 import { t } from './constants';
+import i18n from '../i18n';
 
 export const fetchLocation = async (): Promise<
 	{ latitude: number; longitude: number } | undefined
@@ -44,7 +45,12 @@ export const fetchAddress = async (
 
 export const searchAddress = async (query: string): Promise<any> => {
 	const res = await fetch(
-		'https://nominatim.openstreetmap.org/search?format=json&q=' + query
+		`https://nominatim.openstreetmap.org/search?format=json&q=${query}`,
+		{
+			headers: {
+				'Accept-Language': i18n.language,
+			},
+		}
 	);
 	const data = await res.json();
 
