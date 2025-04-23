@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styles from './modal.module.scss';
+import { useEffect } from 'react';
 
 interface ModalProps {
 	closeModal: () => void;
@@ -8,6 +9,20 @@ interface ModalProps {
 const Modal = ({ closeModal }: ModalProps) => {
 	const { t } = useTranslation();
 	const rules = t('rules', { returnObjects: true }) as string[];
+
+	useEffect(() => {
+		document.addEventListener('keydown', handleKeyDown);
+
+		function handleKeyDown(event: KeyboardEvent) {
+			if (event.key === 'Escape') {
+				closeModal();
+			}
+		}
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	});
 
 	return (
 		<>
