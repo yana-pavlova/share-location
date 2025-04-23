@@ -14,11 +14,6 @@
 	display: grid;
 	grid-template-columns: 1fr auto auto;
 	cursor: pointer;
-
-	& span {
-		opacity: 0.5;
-		transition: opacity 0.2s ease;
-	}
 }
 
 .button {
@@ -34,10 +29,15 @@
 	font-weight: 400;
 	transition: border-bottom 0.2s ease;
 	cursor: pointer;
+
+	@media (hover: hover) {
+		.button:hover {
+			border-bottom: 1px solid #2880ca;
+		}
+	}
 }
 
-@media (hover: hover) {
-	.button:hover {
-		border-bottom: 1px solid #2880ca;
-	}
+.removeMarkerButton,
+.copyLinkButton {
+	border: none;
 }
