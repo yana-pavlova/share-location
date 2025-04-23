@@ -15,12 +15,6 @@
 	grid-template-columns: 1fr auto auto;
 	cursor: pointer;
 	transition: color 0.2s ease;
-
-	@media (hover: hover) {
-		&:hover {
-			color: #2880ca;
-		}
-	}
 }
 
 .button {
