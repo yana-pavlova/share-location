@@ -1,6 +1,7 @@
 import iconUrl from '../img/marker.svg';
 import shadowUrl from '../img/marker-shadow.svg';
 import L from 'leaflet';
+import i18next from 'i18next';
 
 export const customIcon = L.icon({
 	iconUrl: iconUrl,
@@ -13,3 +14,4 @@ export const customIcon = L.icon({
 });
 
 export const MAX_ZOOM = 18;
+export const t = i18next.t.bind(i18next);

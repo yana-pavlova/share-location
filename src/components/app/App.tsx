@@ -79,7 +79,7 @@ const App = () => {
 
 		const getLocation = async () => {
 			setCurLocationIsloading(true);
-			const coords = await fetchLocation(t);
+			const coords = await fetchLocation();
 			setCurLocationIsloading(false);
 
 			if (coords) {

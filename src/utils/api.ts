@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
 import { TAddress } from '../types';
 import geoTimeOut from './geoTimeOut';
-import { TFunction } from 'i18next';
+import { t } from './constants';
 
-export const fetchLocation = async (
-	t: TFunction<'translation', undefined>
-): Promise<{ latitude: number; longitude: number } | undefined> => {
+export const fetchLocation = async (): Promise<
+	{ latitude: number; longitude: number } | undefined
+> => {
 	let loadingToastId;
 
 	try {
