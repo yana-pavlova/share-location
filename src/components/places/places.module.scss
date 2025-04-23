@@ -14,6 +14,13 @@
 	display: grid;
 	grid-template-columns: 1fr auto auto;
 	cursor: pointer;
+	transition: color 0.2s ease;
+
+	@media (hover: hover) {
+		&:hover {
+			color: #2880ca;
+		}
+	}
 }
 
 .button {
@@ -35,9 +42,31 @@
 			border-bottom: 1px solid #2880ca;
 		}
 	}
+
+	&:active {
+		border-bottom: 1px solid #2880ca;
+	}
 }
 
 .removeMarkerButton,
 .copyLinkButton {
 	border: none;
+
+	& svg {
+		transition: stroke 0.2s ease;
+	}
+
+	@media (hover: hover) {
+		&:hover svg {
+			stroke: #2880ca;
+		}
+	}
+
+	&:active {
+		border: none;
+
+		svg {
+			stroke: #2880ca;
+		}
+	}
 }
