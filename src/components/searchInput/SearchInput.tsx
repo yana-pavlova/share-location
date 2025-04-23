@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from './searchInput.module.scss';
 import { Search, ArrowLeft } from 'lucide-react';
-import { searchAdress } from '../../utils/api';
+import { searchAddress } from '../../utils/api';
 import { useDebounce } from '../../hooks/useDebounce';
 import { TSearchAddress } from '../../types';
 import { SearchResults } from '../searchResults/SearchResults';
@@ -10,7 +10,7 @@ export const SearchInput = () => {
 	const [inputVisible, setInputVisible] = useState(false);
 	const [resultsVisible, setResultsVisible] = useState(false);
 	const [query, setQuery] = useState('');
-	const [searchAddress, setSearchAddress] = useState<TSearchAddress[] | null>(
+	const [searchedAddress, setSearchAddress] = useState<TSearchAddress[] | null>(
 		null
 	);
 	const ref = useRef<HTMLInputElement | null>(null);
@@ -39,7 +39,7 @@ export const SearchInput = () => {
 
 	const debouncedSearch = useDebounce(
 		async (query: string, signal: AbortSignal) => {
-			const address = await searchAdress(query);
+			const address = await searchAddress(query);
 
 			if (!signal.aborted) {
 				const filteredAddresses = filterUniqueAddresses(address);
@@ -79,10 +79,10 @@ export const SearchInput = () => {
 	}, [query]);
 
 	useEffect(() => {
-		if (searchAddress) {
+		if (searchedAddress) {
 			setResultsVisible(true);
 		}
-	}, [searchAddress]);
+	}, [searchedAddress]);
 
 	return (
 		<>
@@ -112,9 +112,9 @@ export const SearchInput = () => {
 					</>
 				)}
 			</div>
-			{searchAddress && inputVisible && resultsVisible && (
+			{searchedAddress && inputVisible && resultsVisible && (
 				<SearchResults
-					data={searchAddress}
+					data={searchedAddress}
 					setVisibilityFunctions={[setResultsVisible, setInputVisible]}
 				/>
 			)}

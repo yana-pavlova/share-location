@@ -7,13 +7,15 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { MAX_ZOOM } from '../../utils/constants';
 import { MousePointer2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const FindMe = () => {
 	const dispatch = useDispatch();
 	const map = useMap();
+	const { t } = useTranslation();
 
 	const getLocation = async () => {
-		const coords = await fetchLocation();
+		const coords = await fetchLocation(t);
 		if (coords) {
 			dispatch(
 				addCurrentLocation({
