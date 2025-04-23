@@ -13,7 +13,9 @@
 	flex-direction: column;
 	gap: 20px;
 	min-inline-size: 250px;
+	max-inline-size: 900px;
 	max-block-size: 90%;
+	inline-size: 90%;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
