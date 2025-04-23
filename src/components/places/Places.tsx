@@ -91,11 +91,6 @@ const Places = ({ mapRef }: PlacesProps) => {
 
 	return (
 		<>
-			{markers.length > 1 && (
-				<button onClick={handleRemoveAllPlaces} className={styles.button}>
-					Remove all places
-				</button>
-			)}
 			<ul ref={listRef} className={styles.list}>
 				{markers.map((marker) => {
 					return (
@@ -130,6 +125,11 @@ const Places = ({ mapRef }: PlacesProps) => {
 					);
 				})}
 			</ul>
+			{markers.length > 1 && (
+				<button onClick={handleRemoveAllPlaces} className={styles.button}>
+					Remove all places
+				</button>
+			)}
 		</>
 	);
 };

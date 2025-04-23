@@ -5,6 +5,8 @@
 	flex-direction: column;
 	gap: 7px;
 	overflow: scroll;
+	padding-block-end: 10px;
+	border-bottom: 1px solid rgba(40, 129, 202, 0.133);
 }
 
 .marker {
@@ -20,17 +22,22 @@
 }
 
 .button {
-	cursor: pointer;
+	position: relative;
 	display: flex;
+	padding: 0;
+	align-self: center;
 	border: none;
 	background-color: transparent;
-	border-radius: 10px;
-	opacity: 0.4;
-	transition: opacity 0.3s ease;
+	border-bottom: 1px solid transparent;
+	color: #2880ca;
+	font-size: 0.8rem;
+	font-weight: 400;
+	transition: border-bottom 0.2s ease;
+	cursor: pointer;
 }
 
 @media (hover: hover) {
 	.button:hover {
-		opacity: 1;
+		border-bottom: 1px solid #2880ca;
 	}
 }
