@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useLayoutEffect, useRef } from 'react';
 import { useCopyLink } from '../../utils/useCopyLink';
+import { Trash2, Copy } from 'lucide-react';
 
 type PlacesProps = {
 	mapRef: React.MutableRefObject<L.Map | null>;
@@ -110,14 +111,14 @@ const Places = ({ mapRef }: PlacesProps) => {
 									className={`${styles.copyLinkButton} ${styles.button}`}
 									onClick={handleCopyLinkClick}
 								>
-									🔗
+									<Copy size={16} />
 								</button>
 								{!marker.currentLocation && (
 									<button
 										className={`${styles.removeMarkerButton} ${styles.button}`}
 										onClick={handleRemoveMarkerClick}
 									>
-										❌
+										<Trash2 size={16} />
 									</button>
 								)}
 								<span
