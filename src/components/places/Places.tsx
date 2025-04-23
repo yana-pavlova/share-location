@@ -1,14 +1,13 @@
 import styles from './places.module.scss';
 import clsx from 'clsx';
-import { toast } from 'react-toastify';
 import {
 	selectMarkers,
 	removeMarker,
 	removeAllMarkers,
 } from '../../state/markersSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { useLayoutEffect, useRef } from 'react';
+import { useCopyLink } from '../../utils/useCopyLink';
 
 type PlacesProps = {
 	mapRef: React.MutableRefObject<L.Map | null>;
@@ -18,11 +17,10 @@ const Places = ({ mapRef }: PlacesProps) => {
 	const dispatch = useDispatch();
 	const markers = useSelector(selectMarkers);
 
-	const { t } = useTranslation();
-	const linkCopied = t('linkCopiedText');
-	const linkCopiedErrorText = t('linkCopiedErrorText');
+	const copyLink = useCopyLink();
 
 	const listRef = useRef<HTMLUListElement>(null);
+
 	useLayoutEffect(() => {
 		if (listRef.current) {
 			listRef.current.scrollTop = listRef.current.scrollHeight;
@@ -54,55 +52,7 @@ const Places = ({ mapRef }: PlacesProps) => {
 		const lng = coords?.split(',')[1];
 		const textToCopy = `${url}?lat=${lat}&lng=${lng}`;
 
-		const copyLink = async () => {
-			if (!navigator.clipboard || !navigator.clipboard.writeText) {
-				const textArea = document.createElement('textarea');
-				textArea.value = textToCopy;
-				textArea.style.position = 'fixed'; // Чтобы избежать прокрутки страницы
-				textArea.style.opacity = '0';
-				document.body.appendChild(textArea);
-				textArea.select();
-
-				try {
-					const success = document.execCommand('copy');
-					document.body.removeChild(textArea);
-
-					if (success) {
-						toast.success(linkCopied, {
-							autoClose: 1000,
-							hideProgressBar: true,
-						});
-						return textToCopy; // Возвращаем текст
-					} else {
-						throw new Error('document.execCommand не удалось');
-					}
-				} catch (error) {
-					document.body.removeChild(textArea);
-					console.error('Ошибка копирования через fallback:', error);
-					toast.error(linkCopied, {
-						autoClose: 1000,
-						hideProgressBar: true,
-					});
-					throw error;
-				}
-			}
-
-			const res = await toast.promise(
-				navigator.clipboard.writeText(textToCopy),
-				{
-					success: linkCopied,
-					error: linkCopiedErrorText,
-				},
-				{
-					autoClose: 1000,
-					hideProgressBar: true,
-				}
-			);
-
-			return res;
-		};
-
-		copyLink();
+		copyLink(textToCopy);
 	};
 
 	const handleLiCLick = (e: React.MouseEvent<HTMLLIElement>) => {

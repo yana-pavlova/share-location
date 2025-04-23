@@ -130,6 +130,7 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 							id={marker.id}
 							key={marker.id}
 							marker={marker}
+							position={marker.position}
 						/>
 					))}
 				<SearchInput />
