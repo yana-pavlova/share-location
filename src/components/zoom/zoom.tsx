@@ -5,19 +5,19 @@ import { useMap } from 'react-leaflet';
 
 export const Zoom = () => {
 	const [isExpanded, setIsExpanded] = useState(false);
-	const map = useMap();
+	const mapContainer = useMap().getContainer();
 
 	useEffect(() => {
 		if (isExpanded) {
-			map.getContainer().classList.add(styles.expanded);
+			mapContainer.classList.add(styles.expanded);
 		} else {
-			map.getContainer().classList.remove(styles.expanded);
+			mapContainer.classList.remove(styles.expanded);
 		}
-	}, [isExpanded, map]);
+	}, [isExpanded, mapContainer]);
 
 	return (
 		<div
-			className={styles.container}
+			className={`map-control-container ${styles.container}`}
 			onClick={() => setIsExpanded(!isExpanded)}
 		>
 			{isExpanded ? <Minimize2 /> : <Maximize2 />}

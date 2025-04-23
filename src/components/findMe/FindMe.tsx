@@ -28,7 +28,10 @@ const FindMe = () => {
 	};
 
 	return (
-		<div className={styles.container} onClick={getLocation}>
+		<div
+			className={`map-control-container ${styles.container}`}
+			onClick={getLocation}
+		>
 			<MousePointer2 style={{ transform: 'scaleX(-1)' }} />
 		</div>
 	);
