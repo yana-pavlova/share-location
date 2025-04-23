@@ -86,7 +86,7 @@ export const SearchInput = () => {
 							className={styles.closeButton}
 							onClick={() => setInputVisible(false)}
 						>
-							<ArrowLeft size={20} strokeWidth={2} />
+							<ArrowLeft size={20} strokeWidth={2} color="#000" />
 						</button>
 					</>
 				)}
