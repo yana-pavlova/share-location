@@ -112,13 +112,13 @@ const Places = ({ mapRef }: PlacesProps) => {
 									className={`${styles.copyLinkButton} ${styles.button}`}
 									onClick={handleCopyLinkClick}
 								>
-									<Copy size={16} />
+									<Copy size={16} color="#000" />
 								</button>
 								<button
 									className={`${styles.removeMarkerButton} ${styles.button}`}
 									onClick={handleRemoveMarkerClick}
 								>
-									<Trash2 size={16} />
+									<Trash2 size={16} color="#000" />
 								</button>
 							</li>
 						)

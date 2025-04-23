@@ -71,7 +71,7 @@ export const SearchInput = () => {
 						className={styles.searchButton}
 						onClick={() => setInputVisible(true)}
 					>
-						<Search size={20} strokeWidth={2} />
+						<Search size={20} strokeWidth={2} color="#000" />
 					</button>
 				)}
 				{inputVisible && (
