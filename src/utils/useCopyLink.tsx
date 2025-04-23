@@ -7,7 +7,13 @@ export const useCopyLink = (): ((textToCopy: string) => Promise<void>) => {
 	const linkCopiedErrorText = t('linkCopiedErrorText');
 
 	const copyLink = async (textToCopy: string) => {
-		if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+		if (!navigator.clipboard || !navigator.clipboard.writeText) {
+			toast.error(linkCopiedErrorText, {
+				autoClose: 2000,
+				hideProgressBar: true,
+			});
+			return;
+		}
 
 		await toast.promise(
 			navigator.clipboard.writeText(textToCopy),
@@ -16,7 +22,7 @@ export const useCopyLink = (): ((textToCopy: string) => Promise<void>) => {
 				error: linkCopiedErrorText,
 			},
 			{
-				autoClose: 1000,
+				autoClose: 2000,
 				hideProgressBar: true,
 			}
 		);
