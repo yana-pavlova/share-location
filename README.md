@@ -1,5 +1,3 @@
-beta deploy: [share-location-easily-beta](https://share-location-easily-beta.netlify.app/)
-
 # 📍 Share Location
 
 A fast and simple way to share a location on the map — no app needed.
