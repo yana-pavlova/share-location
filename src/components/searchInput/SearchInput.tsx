@@ -53,13 +53,7 @@ export const SearchInput = () => {
 	);
 
 	useEffect(() => {
-		if (inputVisible) {
-			ref.current?.focus();
-		}
-
-		if (!inputVisible) {
-			setSearchAddress(null);
-		}
+		inputVisible ? ref.current?.focus() : setSearchAddress(null);
 	}, [inputVisible]);
 
 	useEffect(() => {
