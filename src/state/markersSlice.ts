@@ -9,7 +9,16 @@ const loadState = (): TMarker[] | undefined => {
 	// забираем данные из локального хранилища, если они там есть
 	try {
 		const serializedState = localStorage.getItem('markers');
-		return serializedState ? JSON.parse(serializedState) : undefined;
+		if (serializedState === null) return undefined;
+
+		const safeSerializedState = JSON.parse(serializedState).filter(
+			(m: TMarker) =>
+				Array.isArray(m.position) &&
+				m.position.length === 2 &&
+				m.position.every(isFinite)
+		);
+
+		return safeSerializedState;
 	} catch (err) {
 		console.error(err);
 		return undefined;

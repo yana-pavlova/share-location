@@ -11,7 +11,13 @@ export const store = configureStore({
 
 store.subscribe(() => {
 	const state = store.getState();
-	localStorage.setItem('markers', JSON.stringify(state.markers.markers));
+	const safeMarkers = state.markers.markers.filter(
+		(m) =>
+			Array.isArray(m.position) &&
+			m.position.length === 2 &&
+			m.position.every(isFinite)
+	);
+	localStorage.setItem('markers', JSON.stringify(safeMarkers));
 });
 
 export type RootState = ReturnType<typeof store.getState>;
