@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMarker, selectMarkers } from '../../state/markersSlice';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../searchInput/SearchInput';
+import { Zoom } from '../zoom/zoom';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
@@ -132,6 +133,7 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 						/>
 					))}
 				<SearchInput />
+				<Zoom />
 				<FindMe />
 			</MapContainer>
 		</>
