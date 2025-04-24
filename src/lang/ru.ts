@@ -27,4 +27,6 @@ export const ruText: locationText = {
 	locationUndefinedErrorText:
 		'Что-то пошло не так. Пожалуйста, попробуйте ещё раз',
 	linkCopiedErrorText: 'Что-то пошло не так. Пожалуйста, попробуйте ещё раз',
+	removePlacesWarning: 'Вы уверены? Это действие невозможно отменить',
+	removePlacesButtonText: 'Удалить',
 };

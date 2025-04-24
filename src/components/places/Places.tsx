@@ -6,17 +6,20 @@ import {
 	removeAllMarkers,
 } from '../../state/markersSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useCopyLink } from '../../utils/useCopyLink';
 import { Trash2, Copy } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 type PlacesProps = {
 	mapRef: React.MutableRefObject<L.Map | null>;
 };
 
 const Places = ({ mapRef }: PlacesProps) => {
+	const [isWarningShown, setIsWarningShown] = useState(false);
 	const dispatch = useDispatch();
 	const markers = useSelector(selectMarkers);
+	const t = useTranslation().t;
 
 	const copyLink = useCopyLink();
 
@@ -28,8 +31,13 @@ const Places = ({ mapRef }: PlacesProps) => {
 		}
 	});
 
+	const handleRemovePlacesButtonClick = () => {
+		setIsWarningShown(true);
+	};
+
 	const handleRemoveAllPlaces = () => {
 		dispatch(removeAllMarkers());
+		setIsWarningShown(false);
 	};
 
 	const handleRemoveMarkerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -128,9 +136,27 @@ const Places = ({ mapRef }: PlacesProps) => {
 				</ul>
 			)}
 			{markers.length > 1 && (
-				<button onClick={handleRemoveAllPlaces} className={styles.button}>
+				<button
+					onClick={handleRemovePlacesButtonClick}
+					className={styles.button}
+				>
 					Remove all places
 				</button>
+			)}
+
+			{isWarningShown && (
+				<>
+					<div
+						onClick={() => setIsWarningShown(false)}
+						className={`${styles.overlay} modal-opened`}
+					></div>
+					<div className={styles.modal}>
+						<p>{t('removePlacesWarning')}</p>
+						<button className={styles.button} onClick={handleRemoveAllPlaces}>
+							{t('removePlacesButtonText')}
+						</button>
+					</div>
+				</>
 			)}
 		</>
 	);
