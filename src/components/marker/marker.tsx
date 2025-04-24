@@ -5,7 +5,6 @@ import { fetchAddress } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import { updateAddress } from '../../state/markersSlice';
 import { MAX_ZOOM } from '../../utils/constants';
-import { toast } from 'react-toastify';
 import { useCopyLink } from '../../hooks/useCopyLink';
 
 type CustomMarkerProps = {

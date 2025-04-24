@@ -5,11 +5,10 @@ import MyMap from '../map/Map';
 import Places from '../places/Places';
 import L from 'leaflet';
 import { fetchLocation, fetchAddress } from '../../utils/api';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
 	addCurrentLocation,
 	addMarker,
-	selectCurrentLocation,
 	updateCurrentLocation,
 } from '../../state/markersSlice';
 import styles from './app.module.scss';
