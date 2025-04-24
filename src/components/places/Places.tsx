@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useCopyLink } from '../../hooks/useCopyLink';
 import { Trash2, Copy } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { ConfirmationModal } from '../confirmationModal/confirmationModal';
 
 type PlacesProps = {
 	mapRef: React.MutableRefObject<L.Map | null>;
@@ -17,12 +17,10 @@ type PlacesProps = {
 
 const Places = ({ mapRef }: PlacesProps) => {
 	const [isWarningShown, setIsWarningShown] = useState(false);
+	const confirmActionRef = useRef<() => void>(() => {});
 	const dispatch = useDispatch();
 	const markers = useSelector(selectMarkers);
-	const t = useTranslation().t;
-
 	const copyLink = useCopyLink();
-
 	const listRef = useRef<HTMLUListElement>(null);
 
 	useLayoutEffect(() => {
@@ -31,13 +29,13 @@ const Places = ({ mapRef }: PlacesProps) => {
 		}
 	});
 
-	const handleRemovePlacesButtonClick = () => {
-		setIsWarningShown(true);
-	};
-
 	const handleRemoveAllPlaces = () => {
-		dispatch(removeAllMarkers());
-		setIsWarningShown(false);
+		confirmActionRef.current = () => {
+			dispatch(removeAllMarkers());
+			setIsWarningShown(false);
+		};
+
+		setIsWarningShown(true);
 	};
 
 	const handleRemoveMarkerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -46,7 +44,16 @@ const Places = ({ mapRef }: PlacesProps) => {
 		const marker = target.closest('li');
 
 		if (marker?.id) {
-			dispatch(removeMarker(marker.id));
+			confirmActionRef.current = () => {
+				dispatch(removeMarker(marker.id));
+				setIsWarningShown(false);
+			};
+
+			setIsWarningShown(true);
+		} else {
+			console.log('marker not found');
+
+			setIsWarningShown(false);
 		}
 	};
 
@@ -136,28 +143,16 @@ const Places = ({ mapRef }: PlacesProps) => {
 				</ul>
 			)}
 			{markers.length > 1 && (
-				<button
-					onClick={handleRemovePlacesButtonClick}
-					className={styles.button}
-				>
+				<button onClick={handleRemoveAllPlaces} className={styles.button}>
 					Remove all places
 				</button>
 			)}
 
-			{isWarningShown && (
-				<>
-					<div
-						onClick={() => setIsWarningShown(false)}
-						className={`${styles.overlay} modal-opened`}
-					></div>
-					<div className={styles.modal}>
-						<p>{t('removePlacesWarning')}</p>
-						<button className={styles.button} onClick={handleRemoveAllPlaces}>
-							{t('removePlacesButtonText')}
-						</button>
-					</div>
-				</>
-			)}
+			<ConfirmationModal
+				value={isWarningShown}
+				onConfirm={confirmActionRef.current}
+				onClose={() => setIsWarningShown(false)}
+			/>
 		</>
 	);
 };
