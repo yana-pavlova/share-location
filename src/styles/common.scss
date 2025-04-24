@@ -13,7 +13,7 @@ html {
 body {
 	display: flex;
 	flex-direction: column;
-	min-block-size: 100dvh;
+	block-size: 100dvh;
 	min-inline-size: 200px;
 	max-inline-size: 1000px;
 	margin: auto;
@@ -26,6 +26,10 @@ body {
 
 	&:has(.modal-opened) {
 		overflow: hidden;
+	}
+
+	@media (max-width: 600px) {
+		padding: 10px;
 	}
 }
 
