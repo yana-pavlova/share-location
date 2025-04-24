@@ -44,7 +44,6 @@ const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 	const handleClick = (e: LeafletMouseEvent) => {
 		map.setView(e.target.getLatLng(), MAX_ZOOM);
 
-		console.log(position);
 		let url = window.location.origin;
 		const lat = position[0];
 		const lng = position[1];
@@ -57,6 +56,11 @@ const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 		e.target.setOpacity(1);
 		const liItem = document.getElementById(id);
 		liItem?.classList.add('li-highlighted');
+		liItem?.scrollIntoView({
+			block: 'center',
+			inline: 'center',
+			behavior: 'smooth',
+		});
 	};
 
 	const handleMouseOut = (e: LeafletMouseEvent) => {
