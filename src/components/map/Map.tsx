@@ -18,6 +18,7 @@ import { addMarker, selectMarkers } from '../../state/markersSlice';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../searchInput/SearchInput';
 import { Zoom } from '../zoom/zoom';
+import { BeatLoader } from 'react-spinners';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
@@ -29,6 +30,7 @@ type MapProps = {
 
 const MyMap = ({ mapRef, location }: MapProps) => {
 	const [popupPosition, setPopupPosition] = useState<null | LatLng>(null);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const markers = useSelector(selectMarkers);
 	const dispatch = useDispatch();
@@ -65,22 +67,24 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 		return null;
 	};
 
-	const handleSubmitButton = (
+	const handleSubmitButton = async (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
 		e.preventDefault();
 
-		getAddress(popupPosition!.lat, popupPosition!.lng).then((address) => {
-			dispatch(
-				addMarker({
-					id: uuidv4(),
-					text: address || '',
-					position: [popupPosition!.lat, popupPosition!.lng],
-					highlighted: false,
-				})
-			);
-		});
+		setIsLoading(true);
 
+		const address = await getAddress(popupPosition!.lat, popupPosition!.lng);
+		dispatch(
+			addMarker({
+				id: uuidv4(),
+				text: address || '',
+				position: [popupPosition!.lat, popupPosition!.lng],
+				highlighted: false,
+			})
+		);
+
+		setIsLoading(false);
 		setPopupPosition(null);
 	};
 
@@ -134,6 +138,19 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 				<SearchInput />
 				<Zoom />
 				<FindMe />
+				{isLoading && (
+					<BeatLoader
+						color="#2880ca"
+						size={30}
+						cssOverride={{
+							position: 'absolute',
+							top: '50%',
+							left: '50%',
+							transform: 'translate(-50%, -50%)',
+							zIndex: 1000,
+						}}
+					/>
+				)}
 			</MapContainer>
 		</>
 	);
