@@ -7,7 +7,7 @@ import {
 } from '../../state/markersSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { useCopyLink } from '../../utils/useCopyLink';
+import { useCopyLink } from '../../hooks/useCopyLink';
 import { Trash2, Copy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
