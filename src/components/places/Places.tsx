@@ -91,40 +91,42 @@ const Places = ({ mapRef }: PlacesProps) => {
 
 	return (
 		<>
-			<ul ref={listRef} className={styles.list}>
-				{markers.map((marker) => {
-					return (
-						!marker.currentLocation && (
-							<li
-								id={marker.id}
-								data-coords={marker.position.toString()}
-								className={clsx(styles.marker, 'li-normal')}
-								key={marker.id}
-								onClick={handleLiCLick}
-							>
-								<span
-									onMouseEnter={handleMouseEnter}
-									onMouseLeave={handleMouseLeave}
+			{markers.length > 1 && (
+				<ul ref={listRef} className={styles.list}>
+					{markers.map((marker) => {
+						return (
+							!marker.currentLocation && (
+								<li
+									id={marker.id}
+									data-coords={marker.position.toString()}
+									className={clsx(styles.marker, 'li-normal')}
+									key={marker.id}
+									onClick={handleLiCLick}
 								>
-									{marker.text}
-								</span>
-								<button
-									className={`${styles.copyLinkButton} ${styles.button}`}
-									onClick={handleCopyLinkClick}
-								>
-									<Copy size={16} color="#000" />
-								</button>
-								<button
-									className={`${styles.removeMarkerButton} ${styles.button}`}
-									onClick={handleRemoveMarkerClick}
-								>
-									<Trash2 size={16} color="#000" />
-								</button>
-							</li>
-						)
-					);
-				})}
-			</ul>
+									<span
+										onMouseEnter={handleMouseEnter}
+										onMouseLeave={handleMouseLeave}
+									>
+										{marker.text}
+									</span>
+									<button
+										className={`${styles.copyLinkButton} ${styles.button}`}
+										onClick={handleCopyLinkClick}
+									>
+										<Copy size={20} color="#000" />
+									</button>
+									<button
+										className={`${styles.removeMarkerButton} ${styles.button}`}
+										onClick={handleRemoveMarkerClick}
+									>
+										<Trash2 size={20} color="#000" />
+									</button>
+								</li>
+							)
+						);
+					})}
+				</ul>
+			)}
 			{markers.length > 1 && (
 				<button onClick={handleRemoveAllPlaces} className={styles.button}>
 					Remove all places

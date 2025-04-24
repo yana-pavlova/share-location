@@ -12,6 +12,7 @@
 .marker {
 	inline-size: 100%;
 	display: grid;
+	gap: 7px;
 	grid-template-columns: 1fr auto auto;
 	cursor: pointer;
 	transition: color 0.2s ease;
