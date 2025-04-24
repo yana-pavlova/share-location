@@ -4,7 +4,6 @@ import { TMarker } from '../../types';
 import { fetchAddress } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import { updateAddress } from '../../state/markersSlice';
-import { MAX_ZOOM } from '../../utils/constants';
 import { useCopyLink } from '../../hooks/useCopyLink';
 
 type CustomMarkerProps = {
@@ -15,7 +14,6 @@ type CustomMarkerProps = {
 };
 
 const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
-	const map = useMap();
 	const dispatch = useDispatch();
 	const copyLink = useCopyLink();
 
@@ -42,8 +40,6 @@ const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 	};
 
 	const handleClick = (e: LeafletMouseEvent) => {
-		map.setView(e.target.getLatLng(), MAX_ZOOM);
-
 		let url = window.location.origin;
 		const lat = position[0];
 		const lng = position[1];
