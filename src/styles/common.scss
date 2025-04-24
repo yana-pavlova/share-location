@@ -42,7 +42,7 @@ body {
 }
 
 .li-highlighted span {
-	opacity: 1;
+	color: #2880ca;
 }
 
 .leaflet-popup-content {
@@ -52,4 +52,29 @@ body {
 .leaflet-popup-content {
 	inline-size: 100%;
 	text-align: center;
+}
+
+.map-control-container {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	inline-size: 30px;
+	block-size: 30px;
+	z-index: 500;
+	border: 2px solid transparent;
+	border-radius: 4px;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+	background-color: #fff;
+	cursor: pointer;
+
+	@media (hover: hover) {
+		&:hover {
+			background-color: #f4f4f4;
+		}
+	}
+
+	&:active {
+		background-color: #f4f4f4;
+	}
 }

@@ -1,0 +1,12 @@
+.container {
+	right: 12px;
+	top: 12px;
+}
+
+.expanded {
+	position: absolute;
+	block-size: 100dvh;
+	left: 0;
+	top: 0;
+	border-radius: 0;
+}

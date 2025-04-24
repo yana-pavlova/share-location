@@ -7,6 +7,7 @@ export const engText: locationText = {
 		'Click on the map to add a new address',
 		'Hover or click on the address to highlight the respective marker on the map',
 		'Hover or click on the marker to highlight the respective address above the map',
+		'Click on the marker to copy the link to it',
 		'Drag the marker to give it a new location. You current location marker is undraggable',
 		'Click on the copy link button near the address to copy the link to it',
 		'Paste the copied link in a browser to open the map with the respective address',
@@ -25,4 +26,6 @@ export const engText: locationText = {
 	locationUndefinedErrorText: 'Something went wrong. Please, try again',
 	linkCopiedText: 'Link copied to clipboard',
 	linkCopiedErrorText: 'Something went wrong. Please, try again',
+	removePlacesWarning: 'Are you sure? This cannot be undone',
+	removePlacesButtonText: 'Remove',
 };

@@ -1,36 +1,43 @@
 import styles from './places.module.scss';
 import clsx from 'clsx';
-import { toast } from 'react-toastify';
 import {
 	selectMarkers,
 	removeMarker,
 	removeAllMarkers,
 } from '../../state/markersSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { useCopyLink } from '../../utils/useCopyLink';
+import { Trash2, Copy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useLayoutEffect, useRef } from 'react';
 
 type PlacesProps = {
 	mapRef: React.MutableRefObject<L.Map | null>;
 };
 
 const Places = ({ mapRef }: PlacesProps) => {
+	const [isWarningShown, setIsWarningShown] = useState(false);
 	const dispatch = useDispatch();
 	const markers = useSelector(selectMarkers);
+	const t = useTranslation().t;
 
-	const { t } = useTranslation();
-	const linkCopied = t('linkCopiedText');
-	const linkCopiedErrorText = t('linkCopiedErrorText');
+	const copyLink = useCopyLink();
 
 	const listRef = useRef<HTMLUListElement>(null);
+
 	useLayoutEffect(() => {
 		if (listRef.current) {
 			listRef.current.scrollTop = listRef.current.scrollHeight;
 		}
 	});
 
+	const handleRemovePlacesButtonClick = () => {
+		setIsWarningShown(true);
+	};
+
 	const handleRemoveAllPlaces = () => {
 		dispatch(removeAllMarkers());
+		setIsWarningShown(false);
 	};
 
 	const handleRemoveMarkerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -54,55 +61,7 @@ const Places = ({ mapRef }: PlacesProps) => {
 		const lng = coords?.split(',')[1];
 		const textToCopy = `${url}?lat=${lat}&lng=${lng}`;
 
-		const copyLink = async () => {
-			if (!navigator.clipboard || !navigator.clipboard.writeText) {
-				const textArea = document.createElement('textarea');
-				textArea.value = textToCopy;
-				textArea.style.position = 'fixed'; // Чтобы избежать прокрутки страницы
-				textArea.style.opacity = '0';
-				document.body.appendChild(textArea);
-				textArea.select();
-
-				try {
-					const success = document.execCommand('copy');
-					document.body.removeChild(textArea);
-
-					if (success) {
-						toast.success(linkCopied, {
-							autoClose: 1000,
-							hideProgressBar: true,
-						});
-						return textToCopy; // Возвращаем текст
-					} else {
-						throw new Error('document.execCommand не удалось');
-					}
-				} catch (error) {
-					document.body.removeChild(textArea);
-					console.error('Ошибка копирования через fallback:', error);
-					toast.error(linkCopied, {
-						autoClose: 1000,
-						hideProgressBar: true,
-					});
-					throw error;
-				}
-			}
-
-			const res = await toast.promise(
-				navigator.clipboard.writeText(textToCopy),
-				{
-					success: linkCopied,
-					error: linkCopiedErrorText,
-				},
-				{
-					autoClose: 1000,
-					hideProgressBar: true,
-				}
-			);
-
-			return res;
-		};
-
-		copyLink();
+		copyLink(textToCopy);
 	};
 
 	const handleLiCLick = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -141,46 +100,64 @@ const Places = ({ mapRef }: PlacesProps) => {
 	return (
 		<>
 			{markers.length > 1 && (
-				<button onClick={handleRemoveAllPlaces} className={styles.button}>
-					Remove all places
-				</button>
-			)}
-			<ul ref={listRef} className={styles.list}>
-				{markers.map((marker) => {
-					return (
-						!marker.currentLocation && (
-							<li
-								id={marker.id}
-								data-coords={marker.position.toString()}
-								className={clsx(styles.marker, 'li-normal')}
-								key={marker.id}
-								onClick={handleLiCLick}
-							>
-								<button
-									className={`${styles.copyLinkButton} ${styles.button}`}
-									onClick={handleCopyLinkClick}
+				<ul ref={listRef} className={styles.list}>
+					{markers.map((marker) => {
+						return (
+							!marker.currentLocation && (
+								<li
+									id={marker.id}
+									data-coords={marker.position.toString()}
+									className={clsx(styles.marker, 'li-normal')}
+									key={marker.id}
+									onClick={handleLiCLick}
 								>
-									🔗
-								</button>
-								{!marker.currentLocation && (
+									<span
+										onMouseEnter={handleMouseEnter}
+										onMouseLeave={handleMouseLeave}
+									>
+										{marker.text}
+									</span>
+									<button
+										className={`${styles.copyLinkButton} ${styles.button}`}
+										onClick={handleCopyLinkClick}
+									>
+										<Copy size={20} color="#000" />
+									</button>
 									<button
 										className={`${styles.removeMarkerButton} ${styles.button}`}
 										onClick={handleRemoveMarkerClick}
 									>
-										❌
+										<Trash2 size={20} color="#000" />
 									</button>
-								)}
-								<span
-									onMouseEnter={handleMouseEnter}
-									onMouseLeave={handleMouseLeave}
-								>
-									{marker.text}
-								</span>
-							</li>
-						)
-					);
-				})}
-			</ul>
+								</li>
+							)
+						);
+					})}
+				</ul>
+			)}
+			{markers.length > 1 && (
+				<button
+					onClick={handleRemovePlacesButtonClick}
+					className={styles.button}
+				>
+					Remove all places
+				</button>
+			)}
+
+			{isWarningShown && (
+				<>
+					<div
+						onClick={() => setIsWarningShown(false)}
+						className={`${styles.overlay} modal-opened`}
+					></div>
+					<div className={styles.modal}>
+						<p>{t('removePlacesWarning')}</p>
+						<button className={styles.button} onClick={handleRemoveAllPlaces}>
+							{t('removePlacesButtonText')}
+						</button>
+					</div>
+				</>
+			)}
 		</>
 	);
 };

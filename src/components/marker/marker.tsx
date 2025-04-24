@@ -1,22 +1,24 @@
 import { LeafletEvent, LeafletMouseEvent } from 'leaflet';
 import { Marker, useMap } from 'react-leaflet';
-
 import { TMarker } from '../../types';
-
 import { fetchAddress } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import { updateAddress } from '../../state/markersSlice';
 import { MAX_ZOOM } from '../../utils/constants';
+import { toast } from 'react-toastify';
+import { useCopyLink } from '../../utils/useCopyLink';
 
 type CustomMarkerProps = {
 	id: string;
 	marker: TMarker;
+	position: [number, number];
 	icon?: L.Icon;
 };
 
-const CustomMarker = ({ id, marker, icon }: CustomMarkerProps) => {
+const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 	const map = useMap();
 	const dispatch = useDispatch();
+	const copyLink = useCopyLink();
 
 	const getAddress = async (latitude: number, longitude: number) => {
 		const address = await fetchAddress(latitude, longitude);
@@ -42,6 +44,14 @@ const CustomMarker = ({ id, marker, icon }: CustomMarkerProps) => {
 
 	const handleClick = (e: LeafletMouseEvent) => {
 		map.setView(e.target.getLatLng(), MAX_ZOOM);
+
+		console.log(position);
+		let url = window.location.origin;
+		const lat = position[0];
+		const lng = position[1];
+		const textToCopy = `${url}?lat=${lat}&lng=${lng}`;
+
+		copyLink(textToCopy);
 	};
 
 	const handleMouseOver = (e: LeafletMouseEvent) => {
@@ -84,6 +94,7 @@ const CustomMarker = ({ id, marker, icon }: CustomMarkerProps) => {
 			draggable={icon ? false : true}
 			position={marker.position}
 			opacity={0.5}
+			data-coords={marker.position.join(',')}
 			{...(icon ? { icon: icon } : {})}
 		></Marker>
 	);

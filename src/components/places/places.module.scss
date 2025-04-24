@@ -5,32 +5,92 @@
 	flex-direction: column;
 	gap: 7px;
 	overflow: scroll;
+	padding-block-end: 10px;
+	border-bottom: 1px solid rgba(40, 129, 202, 0.133);
 }
 
 .marker {
 	inline-size: 100%;
-	display: flex;
-	align-items: center;
-	gap: 5px;
+	display: grid;
+	gap: 7px;
+	grid-template-columns: 1fr auto auto;
 	cursor: pointer;
-
-	& span {
-		opacity: 0.5;
-		transition: opacity 0.2s ease;
-	}
+	transition: color 0.2s ease;
 }
 
 .button {
-	cursor: pointer;
+	position: relative;
+	display: flex;
+	padding: 0;
+	align-self: center;
 	border: none;
 	background-color: transparent;
-	border-radius: 10px;
-	opacity: 0.4;
-	transition: opacity 0.3s ease;
+	border-bottom: 1px solid transparent;
+	color: #2880ca;
+	font-size: 0.8rem;
+	font-weight: 400;
+	transition: border-bottom 0.2s ease;
+	cursor: pointer;
+
+	@media (hover: hover) {
+		.button:hover {
+			border-bottom: 1px solid #2880ca;
+		}
+	}
+
+	&:active {
+		border-bottom: 1px solid #2880ca;
+	}
 }
 
-@media (hover: hover) {
-	.button:hover {
-		opacity: 1;
+.removeMarkerButton,
+.copyLinkButton {
+	border: none;
+
+	& svg {
+		transition: stroke 0.2s ease;
 	}
+
+	@media (hover: hover) {
+		&:hover svg {
+			stroke: #2880ca;
+		}
+	}
+
+	&:active {
+		border: none;
+
+		svg {
+			stroke: #2880ca;
+		}
+	}
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	block-size: 100%;
+	inline-size: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+.modal {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	min-inline-size: 250px;
+	max-inline-size: 900px;
+	max-block-size: 90%;
+	inline-size: 90%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+	background-color: #fff;
+	z-index: 1001;
+	padding: 1rem;
+	border-radius: 10px;
+	overflow: scroll;
 }

@@ -1,5 +1,3 @@
-// TODO: get rid of props drilling (setCurrentLocation is being passed from App through Map to FindMe)
-
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import styles from './map.module.scss';
@@ -19,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMarker, selectMarkers } from '../../state/markersSlice';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../searchInput/SearchInput';
+import { Zoom } from '../zoom/zoom';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
@@ -129,9 +128,11 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 							id={marker.id}
 							key={marker.id}
 							marker={marker}
+							position={marker.position}
 						/>
 					))}
 				<SearchInput />
+				<Zoom />
 				<FindMe />
 			</MapContainer>
 		</>

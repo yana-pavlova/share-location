@@ -33,6 +33,8 @@ export type locationText = {
 	locationUndefinedErrorText: string;
 	linkCopiedText: string;
 	linkCopiedErrorText: string;
+	removePlacesWarning: string;
+	removePlacesButtonText: string;
 };
 
 export type TSearchAddress = {
