@@ -79,8 +79,10 @@ const markerSlice = createSlice({
 				};
 			}
 		},
-		// TODO: типизировать payload
-		updateAddress: (state, action) => {
+		updateAddress: (
+			state,
+			action: PayloadAction<Pick<TMarker, 'id' | 'position' | 'text'>>
+		) => {
 			const markerIndex = state.markers.findIndex(
 				(m) => m.id === action.payload.id
 			);
@@ -88,7 +90,7 @@ const markerSlice = createSlice({
 			if (markerIndex !== -1) {
 				state.markers[markerIndex] = {
 					...state.markers[markerIndex],
-					position: action.payload.newPosition,
+					position: action.payload.position,
 					text: action.payload.text,
 				};
 			}

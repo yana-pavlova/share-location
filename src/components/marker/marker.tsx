@@ -74,7 +74,7 @@ const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 			dispatch(
 				updateAddress({
 					id: id,
-					newPosition: newPosition,
+					position: newPosition,
 					text: address || 'Неизвестный адрес',
 				})
 			);
