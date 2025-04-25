@@ -1,0 +1,56 @@
+.marker {
+	inline-size: 100%;
+	display: grid;
+	gap: 7px;
+	grid-template-columns: 1fr auto auto;
+	cursor: pointer;
+	transition: color 0.2s ease;
+}
+
+.button {
+	position: relative;
+	display: flex;
+	padding: 0;
+	align-self: center;
+	border: none;
+	background-color: transparent;
+	border-bottom: 1px solid transparent;
+	color: #2880ca;
+	font-size: 0.8rem;
+	font-weight: 400;
+	transition: border-bottom 0.2s ease;
+	cursor: pointer;
+
+	@media (hover: hover) {
+		.button:hover {
+			border-bottom: 1px solid #2880ca;
+		}
+	}
+
+	&:active {
+		border-bottom: 1px solid #2880ca;
+	}
+}
+
+.removeMarkerButton,
+.copyLinkButton {
+	border: none;
+
+	& svg {
+		transition: stroke 0.2s ease;
+	}
+
+	@media (hover: hover) {
+		&:hover svg {
+			stroke: #2880ca;
+		}
+	}
+
+	&:active {
+		border: none;
+
+		svg {
+			stroke: #2880ca;
+		}
+	}
+}
