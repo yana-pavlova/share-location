@@ -3,7 +3,6 @@ import { Copy, Trash2 } from 'lucide-react';
 import styles from './Place.module.scss';
 import { TMarker } from '../../types';
 import { useCopyLink } from '../../hooks/useCopyLink';
-import { useRef, useState } from 'react';
 
 interface PlaceProps {
 	marker: TMarker;
