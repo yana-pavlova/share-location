@@ -13,25 +13,6 @@ interface PlaceProps {
 
 export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const copyLink = useCopyLink();
-
-	const [offset, setOffset] = useState(0);
-	const startX = useRef(0);
-
-	const handleTouchStart = (e: React.TouchEvent) => {
-		startX.current = e.touches[0].clientX;
-	};
-
-	const handleTouchMove = (e: React.TouchEvent) => {
-		const dx = e.touches[0].clientX - startX.current;
-		if (dx < 0) {
-			setOffset(Math.max(dx, -120)); // максимум выдвижения
-		}
-	};
-
-	const handleTouchEnd = () => {
-		setOffset(offset < -60 ? -120 : 0); // откат или завершённый свайп
-	};
-
 	const onCopy = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		let url = window.location.origin;
