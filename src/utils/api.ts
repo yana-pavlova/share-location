@@ -1,14 +1,12 @@
 import { toast } from 'react-toastify';
 import { TAddress } from '../types';
 import geoTimeOut from './geoTimeOut';
-import { t } from './constants';
+import { t, NOMINATIM_BASE_URL } from './constants';
 import i18n from '../i18n';
 
 export const fetchLocation = async (): Promise<
 	{ latitude: number; longitude: number } | undefined
 > => {
-	let loadingToastId;
-
 	try {
 		const position = await geoTimeOut(5000);
 		const { latitude, longitude } = position.coords;
@@ -25,37 +23,50 @@ export const fetchLocation = async (): Promise<
 			toast.error(t('locationUndefinedErrorText'));
 		}
 		return undefined;
-	} finally {
-		if (loadingToastId) {
-			toast.dismiss(loadingToastId);
-		}
 	}
 };
+
+interface NominatimResponse {
+	address: TAddress;
+}
 
 export const fetchAddress = async (
 	lat: number,
 	lng: number
 ): Promise<TAddress | null> => {
-	const response = await fetch(
-		`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
-	);
-	const data = await response.json();
-	return data.address;
+	try {
+		const response = await fetch(
+			`${NOMINATIM_BASE_URL}/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
+		);
+		const data: NominatimResponse = await response.json();
+		console.log(data);
+
+		return data.address;
+	} catch (err) {
+		console.error(err);
+		return null;
+	}
 };
 
 export const searchAddress = async (
 	query: string,
 	viewBox?: number[]
 ): Promise<any> => {
-	const res = await fetch(
-		`https://nominatim.openstreetmap.org/search?format=json&q=${query}&viewbox=${viewBox?.join(',')}`,
-		{
-			headers: {
-				'Accept-Language': i18n.language,
-			},
-		}
-	);
-	const data = await res.json();
+	try {
+		const res = await fetch(
+			`${NOMINATIM_BASE_URL}/search?format=json&q=${query}&viewbox=${viewBox?.join(',')}`,
+			{
+				headers: {
+					'Accept-Language': i18n.language,
+				},
+			}
+		);
+		const data = await res.json();
 
-	return data;
+		return data;
+	} catch (err) {
+		console.error(err);
+
+		return null;
+	}
 };
