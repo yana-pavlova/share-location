@@ -25,4 +25,5 @@ export const engText: locationText = {
 	linkCopiedErrorText: 'Something went wrong. Please, try again',
 	removePlacesWarning: 'Are you sure? This cannot be undone',
 	removePlacesButtonText: 'Remove',
+	unknownAddress: 'Unknown address',
 };

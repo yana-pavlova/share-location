@@ -17,6 +17,7 @@ export type TAddress = {
 	country?: string;
 	country_code?: string;
 	house_number?: string;
+	municipality?: string;
 	[key: string]: string | undefined;
 };
 
@@ -35,6 +36,7 @@ export type locationText = {
 	linkCopiedErrorText: string;
 	removePlacesWarning: string;
 	removePlacesButtonText: string;
+	unknownAddress: string;
 };
 
 export type TSearchAddress = {
