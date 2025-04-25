@@ -3,6 +3,7 @@ import { Copy, Trash2 } from 'lucide-react';
 import styles from './Place.module.scss';
 import { TMarker } from '../../types';
 import { useCopyLink } from '../../hooks/useCopyLink';
+import { useRef, useState } from 'react';
 
 interface PlaceProps {
 	marker: TMarker;
@@ -12,6 +13,24 @@ interface PlaceProps {
 
 export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const copyLink = useCopyLink();
+
+	const [offset, setOffset] = useState(0);
+	const startX = useRef(0);
+
+	const handleTouchStart = (e: React.TouchEvent) => {
+		startX.current = e.touches[0].clientX;
+	};
+
+	const handleTouchMove = (e: React.TouchEvent) => {
+		const dx = e.touches[0].clientX - startX.current;
+		if (dx < 0) {
+			setOffset(Math.max(dx, -120)); // максимум выдвижения
+		}
+	};
+
+	const handleTouchEnd = () => {
+		setOffset(offset < -60 ? -120 : 0); // откат или завершённый свайп
+	};
 
 	const onCopy = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -62,14 +81,14 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				className={`${styles.copyLinkButton} ${styles.button}`}
 				onClick={onCopy}
 			>
-				<Copy size={20} color="#000" />
+				<Copy size={20} color="#fff" />
 				Поделиться
 			</button>
 			<button
 				className={`${styles.removeMarkerButton} ${styles.button}`}
 				onClick={onRemove}
 			>
-				<Trash2 size={20} color="#000" />
+				<Trash2 size={20} color="#fff" />
 				Удалить
 			</button>
 		</li>
