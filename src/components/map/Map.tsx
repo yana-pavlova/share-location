@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../searchInput/SearchInput';
 import { Zoom } from '../zoom/zoom';
 import { BeatLoader } from 'react-spinners';
+import { concatenateAddress } from '../../utils/concatenateAddress';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
@@ -40,19 +41,7 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 
 	const getAddress = async (latitude: number, longitude: number) => {
 		const address = await fetchAddress(latitude, longitude);
-		const addressText = [
-			address?.country,
-			address?.city,
-			address?.town,
-			address?.village,
-			address?.road,
-			address?.house_number,
-			address?.hamlet,
-		]
-			.filter(Boolean)
-			.join(', ');
-
-		return addressText;
+		return concatenateAddress(address);
 	};
 
 	const AddMarkerOnClick = () => {

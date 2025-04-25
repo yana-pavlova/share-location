@@ -5,6 +5,7 @@ import { fetchAddress } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import { updateAddress } from '../../state/markersSlice';
 import { useCopyLink } from '../../hooks/useCopyLink';
+import { concatenateAddress } from '../../utils/concatenateAddress';
 
 type CustomMarkerProps = {
 	id: string;
@@ -19,19 +20,7 @@ const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 
 	const getAddress = async (latitude: number, longitude: number) => {
 		const address = await fetchAddress(latitude, longitude);
-		const addressText = [
-			address?.country,
-			address?.city,
-			address?.town,
-			address?.village,
-			address?.road,
-			address?.house_number,
-			address?.hamlet,
-		]
-			.filter(Boolean)
-			.join(', ');
-
-		return addressText;
+		return concatenateAddress(address);
 	};
 
 	const addMarkerID = (e: LeafletEvent) => {

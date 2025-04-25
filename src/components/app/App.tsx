@@ -17,6 +17,7 @@ import Footer from '../footer/Footer';
 import Header from '../header/Header';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { concatenateAddress } from '../../utils/concatenateAddress';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -47,22 +48,12 @@ const App = () => {
 		const getAddress = async () => {
 			if (lat && lng) {
 				const address = await fetchAddress(+lat, +lng);
-				const addressText = [
-					address?.country,
-					address?.city,
-					address?.town,
-					address?.village,
-					address?.road,
-					address?.house_number,
-					address?.hamlet,
-				]
-					.filter(Boolean) // get rid of falsy values
-					.join(', ');
+				const addressText = concatenateAddress(address);
 
 				const newMarker = {
 					id: uuidv4(),
 					highlighted: false,
-					text: addressText || '',
+					text: addressText,
 					position: [+lat, +lng] as [number, number],
 				};
 				dispatch(addMarker(newMarker));
