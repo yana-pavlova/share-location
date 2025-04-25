@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import MyMap from '../map/Map';
 import Places from '../places/Places';
 import L from 'leaflet';
-import { fetchLocation, fetchAddress } from '../../utils/api';
+import { fetchLocation } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import {
 	addCurrentLocation,
@@ -17,7 +17,7 @@ import Footer from '../footer/Footer';
 import Header from '../header/Header';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { concatenateAddress } from '../../utils/concatenateAddress';
+import { getAddressFromParams } from '../../utils/getAddressFromParams';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -40,37 +40,25 @@ const App = () => {
 	const { t } = useTranslation();
 	const initialPointText = t('initialPoint');
 
+	// один раз при загрузке получаем позицию
 	useEffect(() => {
-		const params = new URLSearchParams(window.location.search);
-		const lat = params.get('lat');
-		const lng = params.get('lng');
-
 		const getAddress = async () => {
-			if (lat && lng) {
-				const address = await fetchAddress(+lat, +lng);
-				const addressText = concatenateAddress(address);
+			const res = await getAddressFromParams();
 
-				const newMarker = {
-					id: uuidv4(),
-					highlighted: false,
-					text: addressText,
-					position: [+lat, +lng] as [number, number],
-				};
-				dispatch(addMarker(newMarker));
-				setLocation({ latitude: +lat, longitude: +lng });
+			const { address, position } = res;
+			const newMarker = {
+				id: uuidv4(),
+				highlighted: false,
+				text: address,
+				position: position as [number, number],
+			};
 
-				params.delete('lat');
-				params.delete('lng');
-
-				const newUrl = window.location.origin + window.location.pathname;
-				window.history.replaceState(null, '', newUrl);
-			}
+			dispatch(addMarker(newMarker));
+			setLocation({ latitude: position[0], longitude: position[1] });
 		};
 
 		const getLocation = async () => {
-			setCurLocationIsloading(true);
 			const coords = await fetchLocation();
-			setCurLocationIsloading(false);
 
 			if (coords) {
 				setCurrentLocation([coords.latitude, coords.longitude]);
@@ -78,13 +66,18 @@ const App = () => {
 			}
 		};
 
-		// if we have lat and lng in url, we show the marker based on them
-		if (lat && lng) {
-			getAddress();
-			// if we don't have lat and lng in url, we show the user's location by default
-		} else {
-			getLocation();
-		}
+		const run = async () => {
+			setCurLocationIsloading(true);
+			try {
+				await getAddress();
+			} catch {
+				await getLocation();
+			} finally {
+				setCurLocationIsloading(false);
+			}
+		};
+
+		run();
 	}, []);
 
 	useEffect(() => {
