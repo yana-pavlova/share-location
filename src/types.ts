@@ -34,6 +34,7 @@ export type locationText = {
 	locationUndefinedErrorText: string;
 	linkCopiedText: string;
 	linkCopiedErrorText: string;
+	removePlaceWarning: string;
 	removePlacesWarning: string;
 	removePlacesButtonText: string;
 	unknownAddress: string;

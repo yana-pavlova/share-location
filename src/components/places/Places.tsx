@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { ConfirmationModal } from '../confirmationModal/confirmationModal';
 import { Place } from '../place/Place';
+import { useTranslation } from 'react-i18next';
 
 type PlacesProps = {
 	mapRef: React.MutableRefObject<L.Map | null>;
@@ -15,10 +16,12 @@ type PlacesProps = {
 
 const Places = ({ mapRef }: PlacesProps) => {
 	const [isWarningShown, setIsWarningShown] = useState(false);
+	const [confirmText, setConfirmText] = useState('');
 	const confirmActionRef = useRef<() => void>(() => {});
 	const dispatch = useDispatch();
 	const markers = useSelector(selectMarkers);
 	const listRef = useRef<HTMLUListElement>(null);
+	const t = useTranslation().t;
 
 	useLayoutEffect(() => {
 		if (listRef.current) {
@@ -32,20 +35,23 @@ const Places = ({ mapRef }: PlacesProps) => {
 			setIsWarningShown(false);
 		};
 
+		setConfirmText(t('removePlacesWarning'));
 		setIsWarningShown(true);
 	};
 
 	const handleRemoveMarkerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		const target = e.target as HTMLElement;
-		const marker = target.closest('li');
+		const markerEl = target.closest('li');
 
-		if (marker?.id) {
+		if (markerEl?.id) {
 			confirmActionRef.current = () => {
-				dispatch(removeMarker(marker.id));
+				dispatch(removeMarker(markerEl.id));
 				setIsWarningShown(false);
 			};
 
+			const address = markerEl.querySelector('span')?.textContent;
+			setConfirmText(t('removePlaceWarning') + address + '?');
 			setIsWarningShown(true);
 		} else {
 			console.log('marker not found');
@@ -73,12 +79,14 @@ const Places = ({ mapRef }: PlacesProps) => {
 				<ul ref={listRef} className={styles.list}>
 					{markers.map((marker) => {
 						return (
-							<Place
-								key={marker.id}
-								marker={marker}
-								onClick={handleLiCLick}
-								onRemove={handleRemoveMarkerClick}
-							/>
+							!marker.currentLocation && (
+								<Place
+									key={marker.id}
+									marker={marker}
+									onClick={handleLiCLick}
+									onRemove={handleRemoveMarkerClick}
+								/>
+							)
 						);
 					})}
 				</ul>
@@ -90,6 +98,7 @@ const Places = ({ mapRef }: PlacesProps) => {
 			)}
 
 			<ConfirmationModal
+				text={confirmText}
 				value={isWarningShown}
 				onConfirm={confirmActionRef.current}
 				onClose={() => setIsWarningShown(false)}

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 interface ConfirmationModalProps {
 	value: boolean;
+	text: string;
 	onConfirm: () => void;
 	onClose: () => void;
 }
@@ -12,6 +13,7 @@ export const ConfirmationModal = ({
 	value,
 	onConfirm,
 	onClose,
+	text,
 }: ConfirmationModalProps) => {
 	const t = useTranslation().t;
 
@@ -23,7 +25,7 @@ export const ConfirmationModal = ({
 					className={`${styles.overlay} modal-opened`}
 				></div>
 				<div className={styles.modal}>
-					<p>{t('removePlacesWarning')}</p>
+					<p>{text}</p>
 					<button className={styles.button} onClick={onConfirm}>
 						{t('removePlacesButtonText')}
 					</button>

@@ -23,7 +23,8 @@ export const engText: locationText = {
 	locationUndefinedErrorText: 'Something went wrong. Please, try again',
 	linkCopiedText: 'Link copied to clipboard',
 	linkCopiedErrorText: 'Something went wrong. Please, try again',
-	removePlacesWarning: 'Are you sure? This cannot be undone',
-	removePlacesButtonText: 'Remove',
+	removePlaceWarning: 'Remove ',
+	removePlacesWarning: 'Remove all saved places?',
+	removePlacesButtonText: 'Remove ',
 	unknownAddress: 'Unknown address',
 };
