@@ -100,7 +100,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 
 		const text = target.querySelector('input')?.value;
 
-		if (text) {
+		if (text && text !== marker.text) {
 			dispatch(editMarkerText({ id: marker.id, text }));
 		}
 
