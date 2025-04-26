@@ -80,7 +80,6 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		if (navigator.share) {
 			navigator
 				.share({
-					text: marker.text,
 					url: textToCopy,
 				})
 				.then(() => console.log('Успешно поделились'))
