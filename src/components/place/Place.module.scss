@@ -1,13 +1,23 @@
 .marker {
+	position: relative;
 	display: grid;
 	inline-size: 100%;
-	display: grid;
-	grid-template-columns: 1fr auto auto;
+	grid-template-columns: 100%;
 	grid-template-rows: minmax(50px, auto);
 	align-items: center;
 	border-bottom: 1px solid #2881ca22;
 	cursor: pointer;
-	transition: color 0.2s ease;
+	transition:
+		color 0.2s ease,
+		transform 0.2s ease;
+}
+
+.buttonContainer {
+	position: absolute;
+	right: -100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	inset-block: 0;
 }
 
 .button {
@@ -16,7 +26,7 @@
 	align-items: center;
 	position: relative;
 	padding: 4px;
-	align-self: center;
+	justify-content: center;
 	border: none;
 	background-color: transparent;
 	color: white;
@@ -33,6 +43,12 @@
 	background-color: #2880ca;
 }
 
+.editLinkButton {
+	background-color: #b7b7b7;
+}
+
 .address {
+	display: flex;
+	inline-size: 100%;
 	padding: 5px 5px 5px 0;
 }

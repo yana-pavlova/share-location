@@ -73,6 +73,8 @@ const Places = ({ mapRef }: PlacesProps) => {
 		}
 	};
 
+	const handleLiEdit = (e: React.MouseEvent<HTMLButtonElement>) => {};
+
 	return (
 		<>
 			{markers.length > 1 && (
@@ -85,6 +87,7 @@ const Places = ({ mapRef }: PlacesProps) => {
 									marker={marker}
 									onClick={handleLiCLick}
 									onRemove={handleRemoveMarkerClick}
+									onEdit={handleLiEdit}
 								/>
 							)
 						);
