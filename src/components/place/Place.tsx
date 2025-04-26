@@ -3,7 +3,7 @@ import { Copy, Trash2, Pencil } from 'lucide-react';
 import styles from './Place.module.scss';
 import { TMarker } from '../../types';
 import { useCopyLink } from '../../hooks/useCopyLink';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Modal from '../modal/Modal';
 import { editMarkerText } from '../../state/markersSlice';
 import { useDispatch } from 'react-redux';
@@ -22,6 +22,8 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const [currentX, setCurrentX] = useState(0);
 	const [editMode, setEditMode] = useState(false);
 
+	const inputRef = useRef<HTMLInputElement>(null);
+
 	const handleClickOutside = () => {
 		setCurrentX(0);
 	};
@@ -31,6 +33,12 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 
 		return () => document.removeEventListener('click', handleClickOutside);
 	}, []);
+
+	useLayoutEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	});
 
 	const onEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setEditMode(true);
@@ -104,7 +112,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 			{editMode && (
 				<Modal closeModal={() => setEditMode(false)}>
 					<form onSubmit={onEditSubmit} className={styles.form}>
-						<input type="text" defaultValue={marker.text} />
+						<input ref={inputRef} type="text" defaultValue={marker.text} />
 						<button type="submit">Сохранить</button>
 					</form>
 				</Modal>
