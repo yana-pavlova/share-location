@@ -21,10 +21,12 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const t = useTranslation().t;
 
 	const [startX, setStartX] = useState(0);
+	const [startY, setStartY] = useState(0);
 	const [currentX, setCurrentX] = useState(0);
 	const [editMode, setEditMode] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
 
+	const isSwipingRef = useRef(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState(marker.text);
 
@@ -61,24 +63,39 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	};
 
 	const onTouchStart = (e: React.TouchEvent) => {
+		const touch = e.touches[0];
+		setStartX(touch.clientX);
+		setStartY(touch.clientY);
+		isSwipingRef.current = false;
+
 		const closeEvent = new CustomEvent('closeAllPlaces', {
 			detail: { sourceId: marker.id },
 		});
 		window.dispatchEvent(closeEvent);
-		setStartX(e.touches[0].clientX);
 	};
 
 	const onTouchMove = (e: React.TouchEvent) => {
-		const deltaX = e.touches[0].clientX - startX;
-		const buttonWidth = buttonContainerRef.current?.offsetWidth || 0;
+		const touch = e.touches[0];
+		const deltaX = touch.clientX - startX;
+		const deltaY = touch.clientY - startY;
 
-		const baseX = isOpen ? -buttonWidth : 0;
-		const newX = Math.min(Math.max(baseX + deltaX, -buttonWidth), 0);
+		if (!isSwipingRef.current && Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+			isSwipingRef.current = true;
+		}
 
-		setCurrentX(newX);
+		if (isSwipingRef.current) {
+			e.preventDefault();
+
+			const buttonWidth = buttonContainerRef.current?.offsetWidth || 0;
+			const baseX = isOpen ? -buttonWidth : 0;
+			const newX = Math.min(Math.max(baseX + deltaX, -buttonWidth), 0);
+			setCurrentX(newX);
+		}
 	};
 
 	const onTouchEnd = () => {
+		isSwipingRef.current = false;
+
 		const buttonWidth = buttonContainerRef.current?.offsetWidth || 0;
 		const threshold = buttonWidth * 0.4;
 
@@ -201,7 +218,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				onTouchMove={onTouchMove}
 				onTouchEnd={onTouchEnd}
 			>
-				<div 
+				<div
 					className={styles.content}
 					style={{ transform: `translateX(${currentX}px)` }}
 					onClick={onClick}
