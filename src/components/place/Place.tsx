@@ -4,19 +4,23 @@ import styles from './Place.module.scss';
 import { TMarker } from '../../types';
 import { useCopyLink } from '../../hooks/useCopyLink';
 import { useEffect, useState } from 'react';
+import Modal from '../modal/Modal';
+import { editMarkerText } from '../../state/markersSlice';
+import { useDispatch } from 'react-redux';
 
 interface PlaceProps {
 	marker: TMarker;
 	onClick: (e: React.MouseEvent<HTMLLIElement>) => void;
 	onRemove: (e: React.MouseEvent<HTMLButtonElement>) => void;
-	onEdit: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const Place = ({ marker, onClick, onRemove, onEdit }: PlaceProps) => {
+export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const copyLink = useCopyLink();
+	const dispatch = useDispatch();
 
 	const [startX, setStartX] = useState(0);
 	const [currentX, setCurrentX] = useState(0);
+	const [editMode, setEditMode] = useState(false);
 
 	const handleClickOutside = () => {
 		setCurrentX(0);
@@ -27,6 +31,10 @@ export const Place = ({ marker, onClick, onRemove, onEdit }: PlaceProps) => {
 
 		return () => document.removeEventListener('click', handleClickOutside);
 	}, []);
+
+	const onEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+		setEditMode(true);
+	};
 
 	const onTouchStart = (e: React.TouchEvent) => {
 		setStartX(e.touches[0].clientX);
@@ -78,48 +86,71 @@ export const Place = ({ marker, onClick, onRemove, onEdit }: PlaceProps) => {
 		if (marker) marker.style.opacity = '0.5';
 	};
 
+	const onEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const target = e.target as HTMLFormElement;
+
+		const text = target.querySelector('input')?.value;
+
+		if (text) {
+			dispatch(editMarkerText({ id: marker.id, text }));
+		}
+
+		setEditMode(false);
+	};
+
 	return (
-		<li
-			id={marker.id}
-			data-coords={marker.position.toString()}
-			className={clsx(styles.marker, 'li-normal')}
-			key={marker.id}
-			onClick={onClick}
-			onTouchStart={onTouchStart}
-			onTouchMove={onTouchMove}
-			onTouchEnd={onTouchEnd}
-			style={{ transform: `translateX(${currentX}px)` }}
-		>
-			<span
-				onMouseEnter={onMouseEnter}
-				onMouseLeave={onMouseLeave}
-				className={styles.address}
+		<>
+			{editMode && (
+				<Modal closeModal={() => setEditMode(false)}>
+					<form onSubmit={onEditSubmit} className={styles.form}>
+						<input type="text" defaultValue={marker.text} />
+						<button type="submit">Сохранить</button>
+					</form>
+				</Modal>
+			)}
+			<li
+				id={marker.id}
+				data-coords={marker.position.toString()}
+				className={clsx(styles.marker, 'li-normal')}
+				key={marker.id}
+				onClick={onClick}
+				onTouchStart={onTouchStart}
+				onTouchMove={onTouchMove}
+				onTouchEnd={onTouchEnd}
+				style={{ transform: `translateX(${currentX}px)` }}
 			>
-				{marker.text}
-			</span>
-			<div className={styles.buttonContainer}>
-				<button
-					className={`${styles.editLinkButton} ${styles.button}`}
-					onClick={onEdit}
+				<span
+					onMouseEnter={onMouseEnter}
+					onMouseLeave={onMouseLeave}
+					className={styles.address}
 				>
-					<Pencil size={20} color="#fff" />
-					Редактировать
-				</button>
-				<button
-					className={`${styles.copyLinkButton} ${styles.button}`}
-					onClick={onCopy}
-				>
-					<Copy size={20} color="#fff" />
-					Поделиться
-				</button>
-				<button
-					className={`${styles.removeMarkerButton} ${styles.button}`}
-					onClick={onRemove}
-				>
-					<Trash2 size={20} color="#fff" />
-					Удалить
-				</button>
-			</div>
-		</li>
+					{marker.text}
+				</span>
+				<div className={styles.buttonContainer}>
+					<button
+						className={`${styles.editLinkButton} ${styles.button}`}
+						onClick={onEdit}
+					>
+						<Pencil size={20} color="#fff" />
+						Редактировать
+					</button>
+					<button
+						className={`${styles.copyLinkButton} ${styles.button}`}
+						onClick={onCopy}
+					>
+						<Copy size={20} color="#fff" />
+						Поделиться
+					</button>
+					<button
+						className={`${styles.removeMarkerButton} ${styles.button}`}
+						onClick={onRemove}
+					>
+						<Trash2 size={20} color="#fff" />
+						Удалить
+					</button>
+				</div>
+			</li>
+		</>
 	);
 };

@@ -4,9 +4,10 @@ import { useEffect } from 'react';
 
 interface ModalProps {
 	closeModal: () => void;
+	children?: React.ReactNode;
 }
 
-const Modal = ({ closeModal }: ModalProps) => {
+const Modal = ({ closeModal, children }: ModalProps) => {
 	const { t } = useTranslation();
 	const rules = t('rules', { returnObjects: true }) as string[];
 
@@ -30,15 +31,22 @@ const Modal = ({ closeModal }: ModalProps) => {
 				onClick={closeModal}
 				className={`${styles.overlay} modal-opened`}
 			></div>
-			<div className={styles.info}>
-				<h2 className={styles.infoTitle}>{t('title')}</h2>
-				<ul className={styles.infoItems}>
-					{rules.map((rule, index) => (
-						<li key={index}>{rule}</li>
-					))}
-				</ul>
-				<button className={styles.closeButton} onClick={closeModal}></button>
-			</div>
+			{children ? (
+				<div className={styles.info}>
+					<h2 className={styles.infoTitle}>EDIT</h2>
+					{children}
+				</div>
+			) : (
+				<div className={styles.info}>
+					<h2 className={styles.infoTitle}>{t('title')}</h2>
+					<ul className={styles.infoItems}>
+						{rules.map((rule, index) => (
+							<li key={index}>{rule}</li>
+						))}
+					</ul>
+					<button className={styles.closeButton} onClick={closeModal}></button>
+				</div>
+			)}
 		</>
 	);
 };

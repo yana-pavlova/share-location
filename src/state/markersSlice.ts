@@ -47,6 +47,16 @@ const markerSlice = createSlice({
 				state.markers.push(action.payload);
 			}
 		},
+		editMarkerText: (
+			state,
+			action: PayloadAction<{ id: string; text: string }>
+		) => {
+			const target = state.markers.find((m) => m.id === action.payload.id);
+
+			if (target) {
+				target.text = action.payload.text;
+			}
+		},
 		removeMarker: (state, action: PayloadAction<string>) => {
 			state.markers = state.markers.filter((m) => m.id !== action.payload);
 		},
@@ -101,6 +111,7 @@ const markerSlice = createSlice({
 export default markerSlice.reducer;
 export const {
 	addMarker,
+	editMarkerText,
 	removeMarker,
 	removeAllMarkers,
 	addCurrentLocation,

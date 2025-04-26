@@ -64,3 +64,18 @@
 		block-size: 100%;
 	}
 }
+
+.form {
+	display: grid;
+	gap: 10px;
+
+	input {
+		padding: 4px;
+	}
+
+	button {
+		inline-size: auto;
+		justify-self: center;
+		cursor: pointer;
+	}
+}
