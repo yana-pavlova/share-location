@@ -82,10 +82,9 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				.share({
 					url: textToCopy,
 				})
-				.then(() => console.log('Успешно поделились'))
-				.catch((error) => console.error('Ошибка при шаринге', error));
+				.catch(() => copyLink(textToCopy));
 		} else {
-			console.log('Web Share API не поддерживается');
+			copyLink(textToCopy);
 		}
 	};
 
