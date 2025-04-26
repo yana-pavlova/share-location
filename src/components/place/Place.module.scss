@@ -1,8 +1,7 @@
 .marker {
 	position: relative;
 	display: grid;
-	inline-size: 100%;
-	grid-template-columns: 100%;
+	grid-template-columns: 1fr;
 	grid-template-rows: minmax(50px, auto);
 	align-items: center;
 	border-bottom: 1px solid #2881ca22;
@@ -13,11 +12,13 @@
 }
 
 .buttonContainer {
-	position: absolute;
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
+	block-size: 100%;
+	position: relative;
 	right: -100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	inset-block: 0;
 }
 
 .button {
@@ -48,6 +49,8 @@
 }
 
 .address {
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
 	display: flex;
 	inline-size: 100%;
 	padding: 5px 5px 5px 0;
@@ -59,6 +62,7 @@
 	}
 
 	.buttonContainer {
+		grid-column: 2 / 3;
 		position: relative;
 		right: 0;
 		block-size: 100%;

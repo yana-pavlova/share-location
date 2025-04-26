@@ -23,9 +23,12 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const [startX, setStartX] = useState(0);
 	const [currentX, setCurrentX] = useState(0);
 	const [editMode, setEditMode] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState(marker.text);
+
+	const buttonContainerRef = useRef<HTMLDivElement>(null);
 
 	const handleClickOutside = () => {
 		setCurrentX(0);
@@ -34,7 +37,17 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	useEffect(() => {
 		document.addEventListener('click', handleClickOutside);
 
-		return () => document.removeEventListener('click', handleClickOutside);
+		const handleClose = () => {
+			setCurrentX(0);
+			setIsOpen(false);
+		};
+
+		window.addEventListener('closeAllPlaces', handleClose);
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+			window.removeEventListener('closeAllPlaces', handleClose);
+		};
 	}, []);
 
 	useLayoutEffect(() => {
@@ -49,19 +62,34 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	};
 
 	const onTouchStart = (e: React.TouchEvent) => {
+		window.dispatchEvent(new Event('closeAllPlaces'));
 		setStartX(e.touches[0].clientX);
 	};
 
 	const onTouchMove = (e: React.TouchEvent) => {
 		const deltaX = e.touches[0].clientX - startX;
-		if (deltaX < 0) setCurrentX(deltaX);
+		const buttonWidth = buttonContainerRef.current?.offsetWidth || 0;
+
+		if (!isOpen && deltaX < 0) {
+			setCurrentX(Math.max(deltaX, -buttonWidth));
+		}
+
+		if (isOpen && deltaX > 0) {
+			setCurrentX(Math.min(deltaX + -buttonWidth, 0));
+		}
 	};
 
 	const onTouchEnd = () => {
-		if (currentX < -50) {
-			setCurrentX(-window.innerWidth);
-		} else {
+		const buttonWidth = buttonContainerRef.current?.offsetWidth || 0;
+
+		if (!isOpen) {
+			setCurrentX(-buttonWidth);
+			setIsOpen(true);
+		} else if (isOpen) {
 			setCurrentX(0);
+			setIsOpen(false);
+		} else {
+			setCurrentX(isOpen ? -buttonWidth : 0);
 		}
 	};
 
@@ -157,7 +185,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				>
 					{marker.text}
 				</span>
-				<div className={styles.buttonContainer}>
+				<div ref={buttonContainerRef} className={styles.buttonContainer}>
 					<button
 						className={`${styles.editLinkButton} ${styles.button}`}
 						onClick={onEdit}
