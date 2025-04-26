@@ -54,7 +54,11 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 			key={marker.id}
 			onClick={onClick}
 		>
-			<span onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+			<span
+				onMouseEnter={onMouseEnter}
+				onMouseLeave={onMouseLeave}
+				className={styles.address}
+			>
 				{marker.text}
 			</span>
 			<button

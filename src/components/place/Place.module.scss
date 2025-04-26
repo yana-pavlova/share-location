@@ -3,7 +3,7 @@
 	inline-size: 100%;
 	display: grid;
 	grid-template-columns: 1fr auto auto;
-	grid-template-rows: 50px;
+	grid-template-rows: minmax(50px, auto);
 	align-items: center;
 	border-bottom: 1px solid #2881ca22;
 	cursor: pointer;
@@ -31,4 +31,8 @@
 
 .copyLinkButton {
 	background-color: #2880ca;
+}
+
+.address {
+	padding: 5px 5px 5px 0;
 }
