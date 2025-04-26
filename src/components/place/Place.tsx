@@ -76,6 +76,18 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		const textToCopy = `${url}?lat=${lat}&lng=${lng}`;
 
 		copyLink(textToCopy);
+
+		if (navigator.share) {
+			navigator
+				.share({
+					text: marker.text,
+					url: textToCopy,
+				})
+				.then(() => console.log('Успешно поделились'))
+				.catch((error) => console.error('Ошибка при шаринге', error));
+		} else {
+			console.log('Web Share API не поддерживается');
+		}
 	};
 
 	const onMouseEnter = (e: React.MouseEvent<HTMLLIElement>) => {
