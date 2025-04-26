@@ -5,13 +5,16 @@ import { MapControl } from '../map-control/MapControl';
 
 export const Expand = () => {
 	const [isExpanded, setIsExpanded] = useState(false);
-	const mapContainer = useMap().getContainer();
+	const map = useMap();
+	const mapContainer = map.getContainer();
 
 	useEffect(() => {
 		if (isExpanded) {
 			mapContainer.classList.add(styles.expanded);
+			map.invalidateSize();
 		} else {
 			mapContainer.classList.remove(styles.expanded);
+			map.invalidateSize();
 		}
 	}, [isExpanded, mapContainer]);
 
