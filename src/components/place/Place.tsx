@@ -65,7 +65,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		}
 	};
 
-	const onCopy = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const onCopy = (e: React.MouseEvent<HTMLElement>) => {
 		let url = window.location.origin;
 		if (url.includes('github')) url += '/share-location';
 		const target = e.target as HTMLElement;
@@ -88,7 +88,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		}
 	};
 
-	const onMouseEnter = (e: React.MouseEvent<HTMLLIElement>) => {
+	const onMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
 		const target = e.target as HTMLElement;
 		const liElement = target.closest('li');
 		liElement?.classList.add('li-highlighted');
@@ -98,7 +98,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		if (marker) marker.style.opacity = '1';
 	};
 
-	const onMouseLeave = (e: React.MouseEvent<HTMLLIElement>) => {
+	const onMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
 		const target = e.target as HTMLElement;
 		const liElement = target.closest('li');
 		liElement?.classList.remove('li-highlighted');
