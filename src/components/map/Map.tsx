@@ -20,7 +20,6 @@ import { SearchInput } from '../searchInput/SearchInput';
 import { Expand } from '../expand/Expand';
 import { BeatLoader } from 'react-spinners';
 import { concatenateAddress } from '../../utils/concatenateAddress';
-import { Zoom } from '../zoom/Zoom';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
