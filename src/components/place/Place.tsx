@@ -41,7 +41,10 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		window.addEventListener('closeAllPlaces', handleClose as EventListener);
 
 		return () => {
-			window.removeEventListener('closeAllPlaces', handleClose as EventListener);
+			window.removeEventListener(
+				'closeAllPlaces',
+				handleClose as EventListener
+			);
 		};
 	}, [marker.id]);
 
@@ -59,7 +62,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 
 	const onTouchStart = (e: React.TouchEvent) => {
 		const closeEvent = new CustomEvent('closeAllPlaces', {
-			detail: { sourceId: marker.id }
+			detail: { sourceId: marker.id },
 		});
 		window.dispatchEvent(closeEvent);
 		setStartX(e.touches[0].clientX);
@@ -106,14 +109,14 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		const lng = coords?.split(',')[1];
 		const textToCopy = `${url}?lat=${lat}&lng=${lng}`;
 
-		copyLink(textToCopy);
-
 		if (navigator.share) {
 			navigator
 				.share({
 					url: textToCopy,
 				})
-				.catch(() => copyLink(textToCopy));
+				.catch(() => {
+					copyLink(textToCopy);
+				});
 		} else {
 			copyLink(textToCopy);
 		}
@@ -184,12 +187,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				data-coords={marker.position.toString()}
 				className={clsx(styles.marker, 'li-normal')}
 				key={marker.id}
-				onClick={(e) => {
-					if (!e.currentTarget.contains(e.target as Node) || 
-						!(e.target as HTMLElement).closest(`.${styles.buttonContainer}`)) {
-						onClick(e);
-					}
-				}}
+				onClick={onClick}
 				onTouchStart={onTouchStart}
 				onTouchMove={onTouchMove}
 				onTouchEnd={onTouchEnd}
@@ -202,8 +200,8 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				>
 					{marker.text}
 				</span>
-				<div 
-					ref={buttonContainerRef} 
+				<div
+					ref={buttonContainerRef}
 					className={styles.buttonContainer}
 					onClick={onButtonContainerClick}
 				>
