@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Copy, Trash2, Pencil } from 'lucide-react';
+import { Share, Trash2, Pencil } from 'lucide-react';
 import styles from './Place.module.scss';
 import { TMarker } from '../../types';
 import { useCopyLink } from '../../hooks/useCopyLink';
@@ -159,7 +159,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 						className={`${styles.copyLinkButton} ${styles.button}`}
 						onClick={onCopy}
 					>
-						<Copy size={20} color="#fff" />
+						<Share size={20} color="#fff" />
 						{t('sharePlaceButtonText')}
 					</button>
 					<button
