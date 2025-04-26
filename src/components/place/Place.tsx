@@ -23,6 +23,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const [editMode, setEditMode] = useState(false);
 
 	const inputRef = useRef<HTMLInputElement>(null);
+	const [inputValue, setInputValue] = useState(marker.text);
 
 	const handleClickOutside = () => {
 		setCurrentX(0);
@@ -96,12 +97,9 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 
 	const onEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const target = e.target as HTMLFormElement;
 
-		const text = target.querySelector('input')?.value;
-
-		if (text && text !== marker.text) {
-			dispatch(editMarkerText({ id: marker.id, text }));
+		if (inputValue.trim() && inputValue.trim() !== marker.text.trim()) {
+			dispatch(editMarkerText({ id: marker.id, text: inputValue.trim() }));
 		}
 
 		setEditMode(false);
@@ -112,8 +110,15 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 			{editMode && (
 				<Modal closeModal={() => setEditMode(false)}>
 					<form onSubmit={onEditSubmit} className={styles.form}>
-						<input ref={inputRef} type="text" defaultValue={marker.text} />
-						<button type="submit">Сохранить</button>
+						<input
+							ref={inputRef}
+							type="text"
+							value={inputValue}
+							onChange={(e) => setInputValue(e.target.value)}
+						/>
+						<button disabled={!inputValue.trim()} type="submit">
+							Сохранить
+						</button>
 					</form>
 				</Modal>
 			)}
