@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import styles from './zoom.module.scss';
-import { Maximize2, Minimize2 } from 'lucide-react';
+import styles from './expand.module.scss';
 import { useMap } from 'react-leaflet';
+import { MapControl } from '../map-control/MapControl';
 
-export const Zoom = () => {
+export const Expand = () => {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const mapContainer = useMap().getContainer();
 
@@ -20,7 +20,11 @@ export const Zoom = () => {
 			className={`map-control-container ${styles.container}`}
 			onClick={() => setIsExpanded(!isExpanded)}
 		>
-			{isExpanded ? <Minimize2 color="#000" /> : <Maximize2 color="#000" />}
+			{isExpanded ? (
+				<MapControl icon="minimize" hPosition="right" vPosition="top" />
+			) : (
+				<MapControl icon="maximize" hPosition="right" vPosition="top" />
+			)}
 		</div>
 	);
 };

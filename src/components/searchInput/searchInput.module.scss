@@ -3,10 +3,9 @@
 	top: 12px;
 	left: 12px;
 	z-index: 1000;
-	block-size: 30px;
+	block-size: 40px;
 	inline-size: calc(100% - 24px - 12px - 30px);
 	display: flex;
-	gap: 10px;
 }
 
 .input,
@@ -14,12 +13,16 @@
 .closeButton {
 	border: 2px solid transparent;
 	border-radius: 4px;
-	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
 	background-color: #fff;
 }
 
+.input,
+.searchButton {
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
 .input {
-	inline-size: calc(100% - 24px);
+	inline-size: calc(100% - 12px);
 	font-family: 'Golos Text', serif;
 	font-size: 1rem;
 
@@ -36,11 +39,32 @@
 	align-items: center;
 	padding: 0;
 	cursor: pointer;
-	inline-size: 30px;
+	inline-size: 40px;
 
 	@media (hover: hover) {
 		&:hover {
 			background-color: #f4f4f4;
 		}
+	}
+}
+
+.closeButton {
+	position: absolute;
+	top: 0;
+	right: 12px;
+	block-size: 40px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	box-shadow: none;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -4px;
+		transform: translateY(-2px);
+		inline-size: 4px;
+		block-size: calc(100% + 4px);
+		background-color: #fff;
 	}
 }

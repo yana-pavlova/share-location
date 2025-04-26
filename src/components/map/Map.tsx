@@ -17,9 +17,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMarker, selectMarkers } from '../../state/markersSlice';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../searchInput/SearchInput';
-import { Zoom } from '../zoom/zoom';
+import { Expand } from '../expand/Expand';
 import { BeatLoader } from 'react-spinners';
 import { concatenateAddress } from '../../utils/concatenateAddress';
+import { Zoom } from '../zoom/Zoom';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
@@ -95,7 +96,6 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 				zoomControl={false}
 				scrollWheelZoom={true}
 			>
-				<ZoomControl position="bottomleft" />
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -125,7 +125,8 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 						/>
 					))}
 				<SearchInput />
-				<Zoom />
+				<Expand />
+				<ZoomControl position="bottomleft" />
 				<FindMe />
 				{isLoading && (
 					<BeatLoader

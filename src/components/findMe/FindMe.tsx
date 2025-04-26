@@ -1,4 +1,3 @@
-import styles from './findMe.module.scss';
 import { fetchLocation } from '../../utils/api';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -6,7 +5,7 @@ import { addCurrentLocation } from '../../state/markersSlice';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { MAX_ZOOM } from '../../utils/constants';
-import { MousePointer2 } from 'lucide-react';
+import { MapControl } from '../map-control/MapControl';
 
 const FindMe = () => {
 	const dispatch = useDispatch();
@@ -28,11 +27,8 @@ const FindMe = () => {
 	};
 
 	return (
-		<div
-			className={`map-control-container ${styles.container}`}
-			onClick={getLocation}
-		>
-			<MousePointer2 style={{ transform: 'scaleX(-1)' }} />
+		<div onClick={getLocation}>
+			<MapControl icon="arrow" hPosition="right" vPosition="bottom" />
 		</div>
 	);
 };

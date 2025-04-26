@@ -1,0 +1,48 @@
+.map-control {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	inline-size: 40px;
+	block-size: 40px;
+	z-index: 500;
+	border: 2px solid transparent;
+	border-radius: 4px;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+	background-color: #fff;
+	cursor: pointer;
+
+	@media (hover: hover) {
+		&:hover {
+			background-color: #f4f4f4;
+		}
+	}
+
+	&:active {
+		background-color: #f4f4f4;
+	}
+}
+
+.right {
+	right: 12px;
+}
+
+.left {
+	left: 12px;
+}
+
+.top {
+	top: 12px;
+}
+
+.right.bottom {
+	bottom: calc(12px + 16.8px);
+}
+
+.left.bottom {
+	bottom: 12px;
+}
+
+.zoom {
+	bottom: calc(40px + 12px + 6px);
+}
