@@ -28,4 +28,8 @@ export const ruText: locationText = {
 	removePlacesWarning: 'Удалить все сохранённые адреса?',
 	removePlacesButtonText: 'Удалить',
 	unknownAddress: 'Неизвестный адрес',
+	editPlaceButtonText: 'Редактировать',
+	sharePlaceButtonText: 'Поделиться',
+	savePlaceButtonText: 'Сохранить',
+	editFormTitle: 'Редактировать',
 };

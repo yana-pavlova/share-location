@@ -27,4 +27,8 @@ export const engText: locationText = {
 	removePlacesWarning: 'Remove all saved places?',
 	removePlacesButtonText: 'Remove ',
 	unknownAddress: 'Unknown address',
+	editPlaceButtonText: 'Edit',
+	sharePlaceButtonText: 'Share',
+	savePlaceButtonText: 'Save',
+	editFormTitle: 'Edit',
 };

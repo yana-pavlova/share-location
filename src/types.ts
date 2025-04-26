@@ -37,6 +37,10 @@ export type locationText = {
 	removePlaceWarning: string;
 	removePlacesWarning: string;
 	removePlacesButtonText: string;
+	editPlaceButtonText: string;
+	sharePlaceButtonText: string;
+	savePlaceButtonText: string;
+	editFormTitle: string;
 	unknownAddress: string;
 };
 

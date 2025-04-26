@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Modal from '../modal/Modal';
 import { editMarkerText } from '../../state/markersSlice';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 interface PlaceProps {
 	marker: TMarker;
@@ -17,6 +18,7 @@ interface PlaceProps {
 export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const copyLink = useCopyLink();
 	const dispatch = useDispatch();
+	const t = useTranslation().t;
 
 	const [startX, setStartX] = useState(0);
 	const [currentX, setCurrentX] = useState(0);
@@ -122,7 +124,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 							onChange={(e) => setInputValue(e.target.value)}
 						/>
 						<button disabled={!inputValue.trim()} type="submit">
-							Сохранить
+							{t('savePlaceButtonText')}
 						</button>
 					</form>
 				</Modal>
@@ -151,21 +153,21 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 						onClick={onEdit}
 					>
 						<Pencil size={20} color="#fff" />
-						Редактировать
+						{t('editPlaceButtonText')}
 					</button>
 					<button
 						className={`${styles.copyLinkButton} ${styles.button}`}
 						onClick={onCopy}
 					>
 						<Copy size={20} color="#fff" />
-						Поделиться
+						{t('sharePlaceButtonText')}
 					</button>
 					<button
 						className={`${styles.removeMarkerButton} ${styles.button}`}
 						onClick={onRemove}
 					>
 						<Trash2 size={20} color="#fff" />
-						Удалить
+						{t('removePlacesButtonText')}
 					</button>
 				</div>
 			</li>

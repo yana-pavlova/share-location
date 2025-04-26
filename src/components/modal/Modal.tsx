@@ -33,7 +33,7 @@ const Modal = ({ closeModal, children }: ModalProps) => {
 			></div>
 			{children ? (
 				<div className={styles.info}>
-					<h2 className={styles.infoTitle}>EDIT</h2>
+					<h2 className={styles.infoTitle}>{t('editFormTitle')}</h2>
 					{children}
 				</div>
 			) : (
