@@ -22,6 +22,7 @@
 	top: 0;
 	right: 0;
 	height: 100%;
+	inline-size: 100%;
 	display: grid;
 	grid-template-columns: repeat(3, minmax(60px, 1fr));
 }
