@@ -25,6 +25,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	const [currentX, setCurrentX] = useState(0);
 	const [editMode, setEditMode] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
+	const [isTransitioning, setIsTransitioning] = useState(false);
 
 	const isSwipingRef = useRef(false);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -91,9 +92,12 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 			const newX = Math.min(Math.max(baseX + deltaX, -buttonWidth), 0);
 			setCurrentX(newX);
 		}
+
+		setIsTransitioning(false);
 	};
 
 	const onTouchEnd = () => {
+		setIsTransitioning(true);
 		isSwipingRef.current = false;
 
 		const buttonWidth = buttonContainerRef.current?.offsetWidth || 0;
@@ -220,7 +224,11 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 			>
 				<div
 					className={styles.content}
-					style={{ transform: `translateX(${currentX}px)` }}
+					style={{
+						transform: `translateX(${currentX}px)`,
+						transition: isTransitioning ? 'transform 0.2s cubic-bezier(.4,1.02,.57,.99)' : 'none'
+					}}
+					onTransitionEnd={() => setIsTransitioning(false)}
 					onClick={onClick}
 				>
 					<span
