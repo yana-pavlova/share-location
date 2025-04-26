@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 interface PlaceProps {
 	marker: TMarker;
-	onClick: (e: React.MouseEvent<HTMLLIElement>) => void;
+	onClick: (e: React.MouseEvent<HTMLElement>) => void;
 	onRemove: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -197,19 +197,23 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				data-coords={marker.position.toString()}
 				className={clsx(styles.marker, 'li-normal')}
 				key={marker.id}
-				onClick={onClick}
 				onTouchStart={onTouchStart}
 				onTouchMove={onTouchMove}
 				onTouchEnd={onTouchEnd}
-				style={{ transform: `translateX(${currentX}px)` }}
 			>
-				<span
-					onMouseEnter={onMouseEnter}
-					onMouseLeave={onMouseLeave}
-					className={styles.address}
+				<div 
+					className={styles.content}
+					style={{ transform: `translateX(${currentX}px)` }}
+					onClick={onClick}
 				>
-					{marker.text}
-				</span>
+					<span
+						onMouseEnter={onMouseEnter}
+						onMouseLeave={onMouseLeave}
+						className={styles.address}
+					>
+						{marker.text}
+					</span>
+				</div>
 				<div
 					ref={buttonContainerRef}
 					className={styles.buttonContainer}

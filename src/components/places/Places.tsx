@@ -60,7 +60,7 @@ const Places = ({ mapRef }: PlacesProps) => {
 		}
 	};
 
-	const handleLiCLick = (e: React.MouseEvent<HTMLLIElement>) => {
+	const handleLiCLick = (e: React.MouseEvent<HTMLElement>) => {
 		const target = e.target as HTMLElement;
 		const liElement = target.closest('li');
 

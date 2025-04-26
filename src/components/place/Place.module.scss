@@ -1,39 +1,46 @@
 .marker {
 	position: relative;
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: minmax(50px, auto);
-	align-items: center;
+	height: 50px;
 	border-bottom: 1px solid #2881ca22;
 	cursor: pointer;
-	transition:
-		color 0.2s ease,
-		transform 0.2s ease;
+	overflow: hidden;
+}
+
+.content {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	grid-template-columns: 1fr;
+	align-items: center;
+	background: white;
+	transition: transform 0.2s ease;
+	z-index: 1;
 }
 
 .buttonContainer {
-	grid-column: 1 / 2;
-	grid-row: 1 / 2;
-	block-size: 100%;
-	position: relative;
-	right: -100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: repeat(3, minmax(60px, 1fr));
 }
 
 .button {
-	block-size: 100%;
+	height: 100%;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
-	position: relative;
-	padding: 4px;
 	justify-content: center;
+	gap: 4px;
+	padding: 4px;
 	border: none;
 	background-color: transparent;
 	color: white;
-	font-size: 0.8rem;
+	font-size: 0.75rem;
 	font-weight: 400;
 	cursor: pointer;
+	white-space: nowrap;
 }
 
 .removeMarkerButton {
@@ -49,11 +56,10 @@
 }
 
 .address {
-	grid-column: 1 / 2;
-	grid-row: 1 / 2;
-	display: flex;
-	inline-size: 100%;
 	padding: 5px 5px 5px 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 @media (hover: hover) and (pointer: fine) {
