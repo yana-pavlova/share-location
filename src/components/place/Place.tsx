@@ -109,16 +109,24 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		const lng = coords?.split(',')[1];
 		const textToCopy = `${url}?lat=${lat}&lng=${lng}`;
 
+		const resetSwipe = () => {
+			setCurrentX(0);
+			setIsOpen(false);
+		};
+
 		if (navigator.share) {
 			navigator
 				.share({
 					url: textToCopy,
 				})
+				.then(resetSwipe)
 				.catch(() => {
 					copyLink(textToCopy);
+					resetSwipe();
 				});
 		} else {
 			copyLink(textToCopy);
+			resetSwipe();
 		}
 	};
 
@@ -150,6 +158,8 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		}
 
 		setEditMode(false);
+		setCurrentX(0);
+		setIsOpen(false);
 	};
 
 	const onButtonContainerClick = (e: React.MouseEvent) => {
