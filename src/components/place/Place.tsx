@@ -41,7 +41,8 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		}
 	});
 
-	const onEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const onEdit = () => {
+		setInputValue(marker.text);
 		setEditMode(true);
 	};
 
@@ -108,7 +109,11 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 	return (
 		<>
 			{editMode && (
-				<Modal closeModal={() => setEditMode(false)}>
+				<Modal
+					closeModal={() => {
+						setEditMode(false);
+					}}
+				>
 					<form onSubmit={onEditSubmit} className={styles.form}>
 						<input
 							ref={inputRef}
