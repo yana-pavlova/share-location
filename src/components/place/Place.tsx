@@ -30,25 +30,20 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 
 	const buttonContainerRef = useRef<HTMLDivElement>(null);
 
-	const handleClickOutside = () => {
-		setCurrentX(0);
-	};
-
 	useEffect(() => {
-		document.addEventListener('click', handleClickOutside);
-
-		const handleClose = () => {
-			setCurrentX(0);
-			setIsOpen(false);
+		const handleClose = (e: CustomEvent) => {
+			if (e.detail?.sourceId !== marker.id) {
+				setCurrentX(0);
+				setIsOpen(false);
+			}
 		};
 
-		window.addEventListener('closeAllPlaces', handleClose);
+		window.addEventListener('closeAllPlaces', handleClose as EventListener);
 
 		return () => {
-			document.removeEventListener('click', handleClickOutside);
-			window.removeEventListener('closeAllPlaces', handleClose);
+			window.removeEventListener('closeAllPlaces', handleClose as EventListener);
 		};
-	}, []);
+	}, [marker.id]);
 
 	useLayoutEffect(() => {
 		if (inputRef.current) {
@@ -56,13 +51,17 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		}
 	});
 
-	const onEdit = () => {
+	const onEdit = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		setInputValue(marker.text);
 		setEditMode(true);
 	};
 
 	const onTouchStart = (e: React.TouchEvent) => {
-		window.dispatchEvent(new Event('closeAllPlaces'));
+		const closeEvent = new CustomEvent('closeAllPlaces', {
+			detail: { sourceId: marker.id }
+		});
+		window.dispatchEvent(closeEvent);
 		setStartX(e.touches[0].clientX);
 	};
 
@@ -70,34 +69,38 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		const deltaX = e.touches[0].clientX - startX;
 		const buttonWidth = buttonContainerRef.current?.offsetWidth || 0;
 
-		if (!isOpen && deltaX < 0) {
-			setCurrentX(Math.max(deltaX, -buttonWidth));
-		}
+		const baseX = isOpen ? -buttonWidth : 0;
+		const newX = Math.min(Math.max(baseX + deltaX, -buttonWidth), 0);
 
-		if (isOpen && deltaX > 0) {
-			setCurrentX(Math.min(deltaX + -buttonWidth, 0));
-		}
+		setCurrentX(newX);
 	};
 
 	const onTouchEnd = () => {
 		const buttonWidth = buttonContainerRef.current?.offsetWidth || 0;
+		const threshold = buttonWidth * 0.4;
 
-		if (!isOpen) {
-			setCurrentX(-buttonWidth);
-			setIsOpen(true);
-		} else if (isOpen) {
-			setCurrentX(0);
-			setIsOpen(false);
+		if (isOpen) {
+			if (Math.abs(currentX) > threshold) {
+				setCurrentX(-buttonWidth);
+			} else {
+				setCurrentX(0);
+				setIsOpen(false);
+			}
 		} else {
-			setCurrentX(isOpen ? -buttonWidth : 0);
+			if (Math.abs(currentX) > threshold) {
+				setCurrentX(-buttonWidth);
+				setIsOpen(true);
+			} else {
+				setCurrentX(0);
+			}
 		}
 	};
 
 	const onCopy = (e: React.MouseEvent<HTMLElement>) => {
+		e.stopPropagation();
 		let url = window.location.origin;
 		if (url.includes('github')) url += '/share-location';
-		const target = e.target as HTMLElement;
-		const coords = target.closest('li')?.dataset.coords;
+		const coords = e.currentTarget.closest('li')?.dataset.coords;
 
 		const lat = coords?.split(',')[0];
 		const lng = coords?.split(',')[1];
@@ -146,6 +149,15 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		setEditMode(false);
 	};
 
+	const onButtonContainerClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+	};
+
+	const onRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+		onRemove(e);
+	};
+
 	return (
 		<>
 			{editMode && (
@@ -172,7 +184,12 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				data-coords={marker.position.toString()}
 				className={clsx(styles.marker, 'li-normal')}
 				key={marker.id}
-				onClick={onClick}
+				onClick={(e) => {
+					if (!e.currentTarget.contains(e.target as Node) || 
+						!(e.target as HTMLElement).closest(`.${styles.buttonContainer}`)) {
+						onClick(e);
+					}
+				}}
 				onTouchStart={onTouchStart}
 				onTouchMove={onTouchMove}
 				onTouchEnd={onTouchEnd}
@@ -185,7 +202,11 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				>
 					{marker.text}
 				</span>
-				<div ref={buttonContainerRef} className={styles.buttonContainer}>
+				<div 
+					ref={buttonContainerRef} 
+					className={styles.buttonContainer}
+					onClick={onButtonContainerClick}
+				>
 					<button
 						className={`${styles.editLinkButton} ${styles.button}`}
 						onClick={onEdit}
@@ -202,7 +223,7 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 					</button>
 					<button
 						className={`${styles.removeMarkerButton} ${styles.button}`}
-						onClick={onRemove}
+						onClick={onRemoveClick}
 					>
 						<Trash2 size={20} color="#fff" />
 						{t('removePlacesButtonText')}
