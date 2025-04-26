@@ -65,14 +65,20 @@
 
 @media (hover: hover) and (pointer: fine) {
 	.marker {
-		grid-template-columns: 1fr 1fr;
+		display: grid;
+		grid-template-columns: 1fr auto;
+	}
+
+	.content {
+		position: static;
+		inset: auto;
+		transform: none !important;
 	}
 
 	.buttonContainer {
+		position: static;
 		grid-column: 2 / 3;
-		position: relative;
-		right: 0;
-		block-size: 100%;
+		right: auto;
 	}
 }
 
