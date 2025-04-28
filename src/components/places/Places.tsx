@@ -3,11 +3,11 @@ import {
 	selectMarkers,
 	removeMarker,
 	removeAllMarkers,
-} from '../../state/markersSlice';
+} from '@/state/markersSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { ConfirmationModal } from '../confirmationModal/confirmationModal';
-import { Place } from '../place/Place';
+import { ConfirmationModal } from '@/components/confirmationModal/confirmationModal';
+import { Place } from '@/components/place/Place';
 import { useTranslation } from 'react-i18next';
 
 type PlacesProps = {

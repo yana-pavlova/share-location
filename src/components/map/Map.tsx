@@ -9,17 +9,20 @@ import {
 	ZoomControl,
 } from 'react-leaflet';
 import L, { LatLng } from 'leaflet';
-import CustomMarker from '../marker/marker';
-import FindMe from '../findMe/FindMe';
-import { fetchAddress } from '../../utils/api';
-import { customIcon, MAX_ZOOM } from '../../utils/constants';
+import CustomMarker from '@/components/marker/marker';
+import FindMe from '@/components/findMe/FindMe';
+import { fetchAddress } from '@/utils/api';
+import { customIcon, MAX_ZOOM } from '@/utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMarker, selectMarkers } from '../../state/markersSlice';
+import { addMarker, selectMarkers } from '@/state/markersSlice';
 import { useTranslation } from 'react-i18next';
-import { SearchInput } from '../searchInput/SearchInput';
-import { Expand } from '../expand/Expand';
+import { SearchInput } from '@/components/searchInput/SearchInput';
+import { Expand } from '@/components/expand/Expand';
 import { BeatLoader } from 'react-spinners';
-import { concatenateAddress } from '../../utils/concatenateAddress';
+import { concatenateAddress } from '@/utils/concatenateAddress';
+import 'leaflet/dist/leaflet.css';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 type MapProps = {
 	mapRef: React.RefObject<L.Map>;
@@ -28,6 +31,15 @@ type MapProps = {
 		longitude: number;
 	};
 };
+
+let DefaultIcon = L.icon({
+	iconUrl: icon,
+	shadowUrl: iconShadow,
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const MyMap = ({ mapRef, location }: MapProps) => {
 	const [popupPosition, setPopupPosition] = useState<null | LatLng>(null);

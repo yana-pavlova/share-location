@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import { Share, Trash2, Pencil } from 'lucide-react';
 import styles from './Place.module.scss';
-import { TMarker } from '../../types';
-import { useCopyLink } from '../../hooks/useCopyLink';
+import { TMarker } from '@/types';
+import { useCopyLink } from '@/hooks/useCopyLink';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Modal from '../modal/Modal';
-import { editMarkerText } from '../../state/markersSlice';
+import Modal from '@/components/modal/Modal';
+import { editMarkerText } from '@/state/markersSlice';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -80,7 +80,11 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 		const deltaX = touch.clientX - startX;
 		const deltaY = touch.clientY - startY;
 
-		if (!isSwipingRef.current && Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+		if (
+			!isSwipingRef.current &&
+			Math.abs(deltaX) > 10 &&
+			Math.abs(deltaX) > Math.abs(deltaY)
+		) {
 			isSwipingRef.current = true;
 		}
 
@@ -226,7 +230,9 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 					className={styles.content}
 					style={{
 						transform: `translateX(${currentX}px)`,
-						transition: isTransitioning ? 'transform 0.2s cubic-bezier(.4,1.02,.57,.99)' : 'none'
+						transition: isTransitioning
+							? 'transform 0.2s cubic-bezier(.4,1.02,.57,.99)'
+							: 'none',
 					}}
 					onTransitionEnd={() => setIsTransitioning(false)}
 					onClick={onClick}

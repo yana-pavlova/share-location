@@ -1,11 +1,11 @@
-import { fetchLocation } from '../../utils/api';
+import { fetchLocation } from '@/utils/api';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { addCurrentLocation } from '../../state/markersSlice';
+import { addCurrentLocation } from '@/state/markersSlice';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { MAX_ZOOM } from '../../utils/constants';
-import { MapControl } from '../map-control/MapControl';
+import { MAX_ZOOM } from '@/utils/constants';
+import { MapControl } from '@/components/map-control/MapControl';
 
 const FindMe = () => {
 	const dispatch = useDispatch();

@@ -1,11 +1,11 @@
 import { LeafletEvent, LeafletMouseEvent } from 'leaflet';
-import { Marker, useMap } from 'react-leaflet';
-import { TMarker } from '../../types';
-import { fetchAddress } from '../../utils/api';
+import { Marker } from 'react-leaflet';
+import { TMarker } from '@/types';
+import { fetchAddress } from '@/utils/api';
 import { useDispatch } from 'react-redux';
-import { updateAddress } from '../../state/markersSlice';
-import { useCopyLink } from '../../hooks/useCopyLink';
-import { concatenateAddress } from '../../utils/concatenateAddress';
+import { updateAddress } from '@/state/markersSlice';
+import { useCopyLink } from '@/hooks/useCopyLink';
+import { concatenateAddress } from '@/utils/concatenateAddress';
 
 type CustomMarkerProps = {
 	id: string;
