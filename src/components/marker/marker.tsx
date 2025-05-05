@@ -41,11 +41,6 @@ const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 		e.target.setOpacity(1);
 		const liItem = document.getElementById(id);
 		liItem?.classList.add('li-highlighted');
-		liItem?.scrollIntoView({
-			block: 'center',
-			inline: 'center',
-			behavior: 'smooth',
-		});
 	};
 
 	const handleMouseOut = (e: LeafletMouseEvent) => {
