@@ -5,7 +5,7 @@ import {
 	removeAllMarkers,
 } from '@/state/markersSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ConfirmationModal } from '@/components/confirmationModal/confirmationModal';
 import { Place } from '@/components/place/Place';
 import { useTranslation } from 'react-i18next';
@@ -22,12 +22,6 @@ const Places = ({ mapRef }: PlacesProps) => {
 	const markers = useSelector(selectMarkers);
 	const listRef = useRef<HTMLUListElement>(null);
 	const t = useTranslation().t;
-
-	useLayoutEffect(() => {
-		if (listRef.current) {
-			listRef.current.scrollTop = listRef.current.scrollHeight;
-		}
-	});
 
 	const handleRemoveAllPlaces = () => {
 		confirmActionRef.current = () => {
