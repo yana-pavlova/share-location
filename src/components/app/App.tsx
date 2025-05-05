@@ -1,23 +1,23 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
-import MyMap from '../map/Map';
-import Places from '../places/Places';
+import MyMap from '@/components/map/Map';
+import Places from '@/components/places/Places';
 import L from 'leaflet';
-import { fetchLocation } from '../../utils/api';
+import { fetchLocation } from '@/utils/api';
 import { useDispatch } from 'react-redux';
 import {
 	addCurrentLocation,
 	addMarker,
 	updateCurrentLocation,
-} from '../../state/markersSlice';
+} from '@/state/markersSlice';
 import styles from './app.module.scss';
-import Modal from '../modal/Modal';
-import Footer from '../footer/Footer';
-import Header from '../header/Header';
+import Modal from '@/components/modal/Modal';
+import Footer from '@/components/footer/Footer';
+import Header from '@/components/header/Header';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { getAddressFromParams } from '../../utils/getAddressFromParams';
+import { getAddressFromParams } from '@/utils/getAddressFromParams';
 
 const App = () => {
 	const dispatch = useDispatch();

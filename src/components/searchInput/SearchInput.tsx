@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from './searchInput.module.scss';
 import { Search, ArrowLeft } from 'lucide-react';
-import { searchAddress } from '../../utils/api';
-import { useDebounce } from '../../hooks/useDebounce';
-import { TSearchAddress } from '../../types';
-import { SearchResults } from '../searchResults/SearchResults';
+import { searchAddress } from '@/utils/api';
+import { useDebounce } from '@/hooks/useDebounce';
+import { TSearchAddress } from '@/types';
+import { SearchResults } from '@/components/searchResults/SearchResults';
 import { useMap } from 'react-leaflet';
 
 export const SearchInput = () => {

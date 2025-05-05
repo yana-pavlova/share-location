@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { TSearchAddress } from '../../types';
+import { TSearchAddress } from '@/types';
 import styles from './searchResults.module.scss';
 import { useMap } from 'react-leaflet';
 

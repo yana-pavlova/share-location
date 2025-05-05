@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './expand.module.scss';
 import { useMap } from 'react-leaflet';
-import { MapControl } from '../map-control/MapControl';
+import { MapControl } from '@/components/map-control/MapControl';
 
 export const Expand = () => {
 	const [isExpanded, setIsExpanded] = useState(false);

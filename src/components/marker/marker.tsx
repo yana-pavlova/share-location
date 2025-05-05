@@ -1,11 +1,11 @@
 import { LeafletEvent, LeafletMouseEvent } from 'leaflet';
-import { Marker, useMap } from 'react-leaflet';
-import { TMarker } from '../../types';
-import { fetchAddress } from '../../utils/api';
+import { Marker } from 'react-leaflet';
+import { TMarker } from '@/types';
+import { fetchAddress } from '@/utils/api';
 import { useDispatch } from 'react-redux';
-import { updateAddress } from '../../state/markersSlice';
-import { useCopyLink } from '../../hooks/useCopyLink';
-import { concatenateAddress } from '../../utils/concatenateAddress';
+import { updateAddress } from '@/state/markersSlice';
+import { useCopyLink } from '@/hooks/useCopyLink';
+import { concatenateAddress } from '@/utils/concatenateAddress';
 
 type CustomMarkerProps = {
 	id: string;
@@ -41,11 +41,6 @@ const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 		e.target.setOpacity(1);
 		const liItem = document.getElementById(id);
 		liItem?.classList.add('li-highlighted');
-		liItem?.scrollIntoView({
-			block: 'center',
-			inline: 'center',
-			behavior: 'smooth',
-		});
 	};
 
 	const handleMouseOut = (e: LeafletMouseEvent) => {

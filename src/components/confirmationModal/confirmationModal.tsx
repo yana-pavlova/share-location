@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './confirmationModal.module.scss';
 import { useTranslation } from 'react-i18next';
 
