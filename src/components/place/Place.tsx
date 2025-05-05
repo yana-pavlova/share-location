@@ -257,21 +257,21 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 						className={`${styles.editLinkButton} ${styles.button}`}
 						onClick={onEdit}
 					>
-						<Pencil size={20} color="#fff" />
+						<Pencil size={20} />
 						{t('editPlaceButtonText')}
 					</button>
 					<button
 						className={`${styles.copyLinkButton} ${styles.button}`}
 						onClick={onCopy}
 					>
-						<Share size={20} color="#fff" />
+						<Share size={20} />
 						{t('sharePlaceButtonText')}
 					</button>
 					<button
 						className={`${styles.removeMarkerButton} ${styles.button}`}
 						onClick={onRemoveClick}
 					>
-						<Trash2 size={20} color="#fff" />
+						<Trash2 size={20} />
 						{t('removePlacesButtonText')}
 					</button>
 				</div>
