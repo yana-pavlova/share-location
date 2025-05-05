@@ -39,7 +39,17 @@ const CustomMarker = ({ id, marker, position, icon }: CustomMarkerProps) => {
 		const lng = position[1];
 		const textToCopy = `${url}?lat=${lat}&lng=${lng}`;
 
-		copyLink(textToCopy);
+		if (navigator.share) {
+			navigator
+				.share({
+					url: textToCopy,
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			copyLink(textToCopy);
+		}
 	};
 
 	const handleMouseOver = (e: LeafletMouseEvent) => {
