@@ -146,7 +146,6 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 				})
 				.then(resetSwipe)
 				.catch(() => {
-					copyLink(textToCopy);
 					resetSwipe();
 				});
 		} else {
