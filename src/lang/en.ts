@@ -11,7 +11,7 @@ export const engText: locationText = {
 		'Click on the bin icon near the address to remove it',
 	],
 	initialPoint: "You're here",
-	addPointButton: 'Click to create a map point',
+	addPointButton: 'Create',
 	footerText: 'If you notice any bugs, please, report them on ',
 	gettingLocationErrorText: 'Getting your location...',
 	forbidfLocationErrorText:
@@ -31,4 +31,5 @@ export const engText: locationText = {
 	sharePlaceButtonText: 'Share',
 	savePlaceButtonText: 'Save',
 	editFormTitle: 'Edit',
+	inputPlaceholder: 'Enter place name or leave the field empty',
 };

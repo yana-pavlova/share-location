@@ -42,6 +42,7 @@ export type locationText = {
 	savePlaceButtonText: string;
 	editFormTitle: string;
 	unknownAddress: string;
+	inputPlaceholder: string;
 };
 
 export type TSearchAddress = {

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './map.module.scss';
 import {
 	MapContainer,
@@ -51,6 +51,8 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 	const t = useTranslation().t;
 	const buttonText = t('addPointButton');
 
+	const inputRef = useRef<HTMLInputElement>(null);
+
 	const getAddress = async (latitude: number, longitude: number) => {
 		const address = await fetchAddress(latitude, longitude);
 		return concatenateAddress(address);
@@ -79,7 +81,7 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 		dispatch(
 			addMarker({
 				id: uuidv4(),
-				text: address || '',
+				text: inputRef.current?.value || address || '',
 				position: [popupPosition!.lat, popupPosition!.lng],
 				highlighted: false,
 			})
@@ -113,8 +115,14 @@ const MyMap = ({ mapRef, location }: MapProps) => {
 				/>
 				<AddMarkerOnClick />
 				{popupPosition && (
-					<Popup position={popupPosition}>
-						<form action="submit">
+					<Popup position={popupPosition} className={styles.tooltipContainer}>
+						<form action="submit" className={styles.popupForm}>
+							<input
+								ref={inputRef}
+								type="text"
+								className={styles.popupInput}
+								placeholder={t('inputPlaceholder')}
+							/>
 							<button
 								className={styles.popupButton}
 								type="submit"

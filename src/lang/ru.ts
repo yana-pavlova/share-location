@@ -11,7 +11,7 @@ export const ruText: locationText = {
 		'Нажмите на иконку корзины рядом с адресом, чтобы удалить его',
 	],
 	initialPoint: 'Вы здесь',
-	addPointButton: 'Нажмите, чтобы создать точку',
+	addPointButton: 'Создать',
 	footerText: 'Если вы нашли ошибку, пожалуйста, сообщите о ней ',
 	linkCopiedText: 'Ссылка скопирована в буфер обмена',
 	gettingLocationErrorText: 'Получаем ваше местоположение...',
@@ -32,4 +32,5 @@ export const ruText: locationText = {
 	sharePlaceButtonText: 'Поделиться',
 	savePlaceButtonText: 'Сохранить',
 	editFormTitle: 'Редактировать',
+	inputPlaceholder: 'Введите название места или оставьте поле пустым',
 };

@@ -27,3 +27,10 @@
 		font-weight: bold;
 	}
 }
+
+.popupForm {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 22px 10px 10px 10px;
+}
