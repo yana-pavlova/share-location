@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 import { ConfirmationModal } from '@/components/confirmationModal/confirmationModal';
 import { Place } from '@/components/place/Place';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 
 type PlacesProps = {
 	mapRef: React.MutableRefObject<L.Map | null>;
@@ -86,7 +87,10 @@ const Places = ({ mapRef }: PlacesProps) => {
 				</ul>
 			)}
 			{markers.length > 1 && (
-				<button onClick={handleRemoveAllPlaces} className={styles.button}>
+				<button
+					onClick={handleRemoveAllPlaces}
+					className={clsx(styles.button, 'button')}
+				>
 					Remove all places
 				</button>
 			)}

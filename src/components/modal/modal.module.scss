@@ -27,19 +27,19 @@
 	overflow: scroll;
 }
 
-.info-title {
+.infoTitle {
 	text-transform: uppercase;
 	font-size: 1.3em;
 }
 
-.info-items {
+.infoItems {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 	line-height: 1.5;
 }
 
-.info-items li::before {
+.infoItems li::before {
 	content: '';
 	display: inline-block;
 	width: 10px;
@@ -49,7 +49,7 @@
 	margin-inline-end: 5px;
 }
 
-.close-button {
+.closeButton {
 	inline-size: 22px;
 	block-size: 22px;
 	cursor: pointer;
@@ -72,7 +72,7 @@
 	}
 }
 
-.close-button::before {
+.closeButton::before {
 	content: '';
 	position: absolute;
 	transform: translateX(-50%) rotate(45deg);
@@ -84,7 +84,7 @@
 	border-radius: 2px;
 }
 
-.close-button::after {
+.closeButton::after {
 	content: '';
 	position: absolute;
 	transform: translateX(-50%) rotate(-45deg);

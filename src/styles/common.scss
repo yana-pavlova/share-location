@@ -73,3 +73,19 @@ body {
 .leaflet-bar a {
 	border-bottom: 2px solid #ccc;
 }
+
+.button {
+	inline-size: fit-content;
+	padding: 0;
+	border: 1px solid transparent;
+	background-color: transparent;
+	cursor: pointer;
+	color: #2880ca;
+	transition: border-bottom 0.2s ease;
+
+	@media (hover: hover) {
+		&:hover {
+			border-bottom: 1px solid #2880ca;
+		}
+	}
+}

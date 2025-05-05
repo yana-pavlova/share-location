@@ -210,7 +210,11 @@ export const Place = ({ marker, onClick, onRemove }: PlaceProps) => {
 							value={inputValue}
 							onChange={(e) => setInputValue(e.target.value)}
 						/>
-						<button disabled={!inputValue.trim()} type="submit">
+						<button
+							disabled={!inputValue.trim()}
+							type="submit"
+							className="button"
+						>
 							{t('savePlaceButtonText')}
 						</button>
 					</form>

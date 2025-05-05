@@ -44,7 +44,7 @@ const Modal = ({ closeModal, children }: ModalProps) => {
 							<li key={index}>{rule}</li>
 						))}
 					</ul>
-					<button className={styles.closeButton} onClick={closeModal}></button>
+					<button className={styles.closeButton} onClick={closeModal} />
 				</div>
 			)}
 		</>
